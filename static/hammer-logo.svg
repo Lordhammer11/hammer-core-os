@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="hammerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A855F7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#818CF8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="headGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#818CF8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A855F7;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="#090D16" rx="32"/>
+
+  <!-- Subtle background glow -->
+  <ellipse cx="200" cy="185" rx="110" ry="110" fill="#A855F7" opacity="0.06"/>
+
+  <!-- Mjolnir — Handle -->
+  <!-- Grip wrap bands -->
+  <rect x="188" y="268" width="24" height="5" rx="2" fill="#818CF8" opacity="0.5"/>
+  <rect x="188" y="278" width="24" height="5" rx="2" fill="#818CF8" opacity="0.5"/>
+
+  <!-- Handle shaft -->
+  <rect x="192" y="240" width="16" height="88" rx="4" fill="url(#hammerGrad)" filter="url(#glow)"/>
+
+  <!-- Strap loop at bottom -->
+  <rect x="182" y="322" width="36" height="10" rx="5" fill="none" stroke="url(#hammerGrad)" stroke-width="3" filter="url(#glow)"/>
+
+  <!-- Mjolnir — Head body -->
+  <rect x="130" y="148" width="140" height="100" rx="12" fill="url(#headGrad)" filter="url(#softglow)"/>
+
+  <!-- Head top bevel -->
+  <rect x="138" y="148" width="124" height="8" rx="4" fill="#C084FC" opacity="0.4"/>
+
+  <!-- Head side notch left -->
+  <rect x="130" y="156" width="14" height="26" rx="4" fill="#090D16" opacity="0.5"/>
+  <!-- Head side notch right -->
+  <rect x="256" y="156" width="14" height="26" rx="4" fill="#090D16" opacity="0.5"/>
+
+  <!-- Face rune lines (subtle etching) -->
+  <line x1="162" y1="172" x2="238" y2="172" stroke="#E2E8F0" stroke-width="1.2" opacity="0.15"/>
+  <line x1="162" y1="184" x2="238" y2="184" stroke="#E2E8F0" stroke-width="1.2" opacity="0.15"/>
+  <line x1="162" y1="196" x2="210" y2="196" stroke="#E2E8F0" stroke-width="1.2" opacity="0.15"/>
+
+  <!-- Center gem / energy core -->
+  <circle cx="200" cy="198" r="10" fill="#090D16"/>
+  <circle cx="200" cy="198" r="7" fill="#A855F7" filter="url(#glow)" opacity="0.9"/>
+  <circle cx="200" cy="198" r="3" fill="#E2E8F0" opacity="0.8"/>
+
+  <!-- Neck connector (head to handle) -->
+  <rect x="186" y="248" width="28" height="20" rx="3" fill="url(#hammerGrad)"/>
+  <!-- Neck detail lines -->
+  <line x1="192" y1="252" x2="192" y2="264" stroke="#090D16" stroke-width="1.5" opacity="0.4"/>
+  <line x1="200" y1="252" x2="200" y2="264" stroke="#090D16" stroke-width="1.5" opacity="0.4"/>
+  <line x1="208" y1="252" x2="208" y2="264" stroke="#090D16" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Lightning bolt accent — top right of hammer head -->
+  <polygon points="236,114 228,136 234,136 226,158 244,130 237,130" fill="#A855F7" opacity="0.85" filter="url(#glow)"/>
+</svg>

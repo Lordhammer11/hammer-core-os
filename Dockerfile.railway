@@ -1,0 +1,69 @@
+# HaMm3r Corp OS — Railway Deploy
+# Full build: Open WebUI frontend + backend + claude-skills suite bundled in
+# Combines: Lordhammer11/hammer-agent-os + alirezarezvani/claude-skills
+
+######## Frontend build ########
+FROM --platform=$BUILDPLATFORM node:22-alpine3.20 AS build
+ARG BUILD_HASH=hammer-corp-os
+
+WORKDIR /app
+RUN apk add --no-cache git
+
+COPY package.json package-lock.json ./
+RUN npm ci --force
+
+COPY . .
+ENV APP_BUILD_HASH=${BUILD_HASH}
+ENV NODE_OPTIONS="--max-old-space-size=6144"
+RUN npm run build
+
+######## Backend + final image ########
+FROM python:3.11-slim-bookworm
+
+ENV HOME=/root
+ENV WEBUI_ORIGIN="https://hammer-corp-os-production.up.railway.app"
+ENV GLOBAL_LOG_LEVEL="WARNING"
+ENV RESET_CONFIG_ON_START=False
+ENV FRONTEND_BUILD_DIR=/app/build
+
+WORKDIR /app
+
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl git build-essential pandoc netcat-openbsd \
+    ffmpeg libsm6 libxext6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python deps
+COPY ./backend/requirements.txt ./requirements.txt
+RUN pip3 install uv && \
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu --no-cache-dir && \
+    uv pip install --system -r requirements.txt --no-cache-dir
+
+# Copy backend
+COPY ./backend .
+
+# CHANGELOG.md lives at repo root but env.py looks for it inside the open_webui package dir
+COPY ./CHANGELOG.md ./open_webui/CHANGELOG.md
+
+# Copy built frontend
+COPY --from=build /app/build /app/build
+
+# Copy HaMm3r Corp OS branding into build
+COPY static/login.html /app/build/login.html
+COPY static/custom.css /app/build/custom.css
+COPY static/manifest.json /app/build/manifest.json
+COPY static/hammer-logo.svg /app/build/hammer-logo.svg
+COPY static/mjolnir.png /app/build/mjolnir.png
+COPY static/mjolnir.jpg /app/build/mjolnir.jpg
+COPY static/favicon.png /app/build/favicon.png
+COPY static/favicon.svg /app/build/favicon.svg
+COPY static/favicon-96x96.png /app/build/favicon-96x96.png
+COPY static/apple-touch-icon.png /app/build/apple-touch-icon.png
+
+# Bundle claude-skills into the image for use by agents and tools
+COPY ./claude-skills /app/claude-skills
+
+EXPOSE 8080
+
+CMD ["bash", "start.sh"]

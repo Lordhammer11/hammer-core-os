@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+		<title>HaMm3r's Agent OS — Sign In</title>
+
+		<!-- iOS PWA / Add to Home Screen -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="HaMm3r OS" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="theme-color" content="#090D16" />
+
+		<!-- iOS Home Screen Icons -->
+		<link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
+
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="/static/manifest.json" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			:root {
+				--canvas: #090d16;
+				--card: #131b2e;
+				--border: rgba(255, 255, 255, 0.06);
+				--text: #e2e8f0;
+				--muted: #718096;
+				--accent: #818cf8;
+				--purple: #a855f7;
+				--cyan: #00d8ff;
+				--coral: #ff6b8a;
+				--green: #48bb78;
+			}
+
+			body {
+				background: var(--canvas);
+				color: var(--text);
+				font-family:
+					'Inter',
+					-apple-system,
+					BlinkMacSystemFont,
+					sans-serif;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				overflow: hidden;
+			}
+
+			/* Animated background */
+			.bg-orbs {
+				position: fixed;
+				inset: 0;
+				pointer-events: none;
+				z-index: 0;
+			}
+			.orb {
+				position: absolute;
+				border-radius: 50%;
+				filter: blur(80px);
+				opacity: 0.12;
+				animation: float 8s ease-in-out infinite;
+			}
+			.orb1 {
+				width: 500px;
+				height: 500px;
+				background: var(--accent);
+				top: -100px;
+				left: -100px;
+				animation-delay: 0s;
+			}
+			.orb2 {
+				width: 400px;
+				height: 400px;
+				background: var(--purple);
+				bottom: -80px;
+				right: -80px;
+				animation-delay: 3s;
+			}
+			.orb3 {
+				width: 300px;
+				height: 300px;
+				background: var(--cyan);
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				animation-delay: 1.5s;
+			}
+
+			@keyframes float {
+				0%,
+				100% {
+					transform: translateY(0) scale(1);
+				}
+				50% {
+					transform: translateY(-30px) scale(1.05);
+				}
+			}
+
+			/* Login card */
+			.login-wrap {
+				position: relative;
+				z-index: 10;
+				width: 100%;
+				max-width: 420px;
+				padding: 20px;
+			}
+
+			.login-card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 24px;
+				padding: 40px 36px;
+				box-shadow:
+					0 32px 80px rgba(0, 0, 0, 0.5),
+					0 0 0 1px rgba(129, 140, 248, 0.08);
+			}
+
+			/* Logo */
+			.logo-area {
+				text-align: center;
+				margin-bottom: 32px;
+			}
+			.logo-avatar {
+				width: 88px;
+				height: 88px;
+				margin: 0 auto 16px;
+				border-radius: 20px;
+				border: 2px solid rgba(129, 140, 248, 0.3);
+				box-shadow:
+					0 0 32px rgba(129, 140, 248, 0.2),
+					0 0 64px rgba(0, 216, 255, 0.1);
+				overflow: hidden;
+				background: #090d16;
+			}
+			.logo-avatar img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+			.logo-title {
+				font-size: 22px;
+				font-weight: 700;
+				color: #f7fafc;
+				letter-spacing: -0.5px;
+			}
+			.logo-sub {
+				font-size: 13px;
+				color: var(--muted);
+				margin-top: 4px;
+			}
+
+			/* Touch ID button */
+			.touchid-section {
+				text-align: center;
+				margin-bottom: 28px;
+			}
+			.touchid-btn {
+				width: 100%;
+				height: 64px;
+				background: linear-gradient(135deg, rgba(129, 140, 248, 0.15), rgba(168, 85, 247, 0.15));
+				border: 1.5px solid rgba(129, 140, 248, 0.35);
+				border-radius: 16px;
+				color: var(--accent);
+				font-size: 15px;
+				font-weight: 600;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 12px;
+				transition: all 0.2s ease;
+				font-family: inherit;
+				position: relative;
+				overflow: hidden;
+			}
+			.touchid-btn:hover {
+				background: linear-gradient(135deg, rgba(129, 140, 248, 0.25), rgba(168, 85, 247, 0.25));
+				border-color: rgba(129, 140, 248, 0.6);
+				transform: translateY(-1px);
+				box-shadow: 0 8px 24px rgba(129, 140, 248, 0.2);
+			}
+			.touchid-btn:active {
+				transform: translateY(0);
+			}
+			.touchid-btn.scanning {
+				border-color: var(--cyan);
+				color: var(--cyan);
+				animation: pulse-scan 1.2s ease-in-out infinite;
+			}
+			.touchid-btn.success {
+				border-color: var(--green);
+				color: var(--green);
+				background: rgba(72, 187, 120, 0.12);
+			}
+			.touchid-btn.error {
+				border-color: var(--coral);
+				color: var(--coral);
+				background: rgba(255, 107, 138, 0.1);
+			}
+
+			@keyframes pulse-scan {
+				0%,
+				100% {
+					box-shadow: 0 0 0 0 rgba(0, 216, 255, 0.4);
+				}
+				50% {
+					box-shadow: 0 0 0 12px rgba(0, 216, 255, 0);
+				}
+			}
+
+			/* Fingerprint icon */
+			.fp-icon {
+				font-size: 28px;
+				transition: all 0.3s ease;
+			}
+			.touchid-btn.scanning .fp-icon {
+				animation: spin-subtle 2s linear infinite;
+			}
+			@keyframes spin-subtle {
+				0% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.15);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
+
+			.touchid-label {
+				font-size: 14px;
+			}
+
+			/* Divider */
+			.divider {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin: 20px 0;
+				color: var(--muted);
+				font-size: 12px;
+			}
+			.divider::before,
+			.divider::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+
+			/* Form fields */
+			.field {
+				margin-bottom: 14px;
+			}
+			.field label {
+				display: block;
+				font-size: 11px;
+				font-weight: 600;
+				color: var(--muted);
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				margin-bottom: 6px;
+			}
+			.field input {
+				width: 100%;
+				height: 44px;
+				background: rgba(255, 255, 255, 0.04);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 0 14px;
+				color: var(--text);
+				font-size: 14px;
+				outline: none;
+				transition: border-color 0.15s;
+				font-family: inherit;
+			}
+			.field input:focus {
+				border-color: var(--accent);
+				box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.12);
+			}
+			.field input::placeholder {
+				color: #4a5568;
+			}
+
+			/* Submit btn */
+			.submit-btn {
+				width: 100%;
+				height: 48px;
+				background: linear-gradient(135deg, var(--accent), var(--purple));
+				border: none;
+				border-radius: 12px;
+				color: white;
+				font-size: 15px;
+				font-weight: 600;
+				cursor: pointer;
+				margin-top: 4px;
+				transition: all 0.2s ease;
+				font-family: inherit;
+			}
+			.submit-btn:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 8px 24px rgba(129, 140, 248, 0.35);
+			}
+			.submit-btn:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+				transform: none;
+			}
+
+			/* Status message */
+			.status-msg {
+				text-align: center;
+				font-size: 13px;
+				margin-top: 12px;
+				min-height: 18px;
+				transition: all 0.3s ease;
+			}
+			.status-msg.err {
+				color: var(--coral);
+			}
+			.status-msg.ok {
+				color: var(--green);
+			}
+
+			/* Footer */
+			.login-footer {
+				text-align: center;
+				margin-top: 20px;
+				font-size: 11px;
+				color: #4a5568;
+			}
+			.login-footer strong {
+				color: #818cf8;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bg-orbs">
+			<div class="orb orb1"></div>
+			<div class="orb orb2"></div>
+			<div class="orb orb3"></div>
+		</div>
+
+		<div class="login-wrap">
+			<div class="login-card">
+				<div class="logo-area">
+					<div class="logo-avatar">
+						<img src="/static/mjolnir.jpg" alt="Mjolnir" style="border-radius: 12px" />
+					</div>
+					<div class="logo-title">HaMm3r's Agent OS</div>
+					<div class="logo-sub">Welcome back, Mr. Hammer.</div>
+				</div>
+
+				<!-- Touch ID -->
+				<div class="touchid-section">
+					<button class="touchid-btn" id="touchIdBtn" onclick="doTouchId()">
+						<span class="fp-icon" id="fpIcon">&#x1F9BE;</span>
+						<span class="touchid-label" id="touchIdLabel">Sign in with Touch ID</span>
+					</button>
+				</div>
+
+				<div class="divider">or sign in with password</div>
+
+				<!-- Password form -->
+				<form id="loginForm" onsubmit="doPasswordLogin(event)">
+					<div class="field">
+						<label>Email</label>
+						<input type="email" id="emailInput" value="ronald.majewski@agattackllc.com" required />
+					</div>
+					<div class="field">
+						<label>Password</label>
+						<input type="password" id="passwordInput" placeholder="••••••••" required />
+					</div>
+					<button type="submit" class="submit-btn" id="submitBtn">Sign In</button>
+				</form>
+
+				<div class="status-msg" id="statusMsg"></div>
+			</div>
+
+			<div class="login-footer">
+				<strong>HaMm3r OS</strong> · Powered by Claude + Ollama · Secured by Touch ID
+			</div>
+		</div>
+
+		<script>
+			const EMAIL = document.getElementById('emailInput').value;
+
+			// ── Touch ID via WebAuthn ─────────────────────────────────────────────────
+
+			async function doTouchId() {
+				const btn = document.getElementById('touchIdBtn');
+				const icon = document.getElementById('fpIcon');
+				const label = document.getElementById('touchIdLabel');
+				const msg = document.getElementById('statusMsg');
+
+				if (!window.PublicKeyCredential) {
+					msg.className = 'status-msg err';
+					msg.textContent = 'WebAuthn not supported in this browser';
+					return;
+				}
+
+				btn.className = 'touchid-btn scanning';
+				label.textContent = 'Place finger on Touch ID…';
+				msg.className = 'status-msg';
+				msg.textContent = '';
+
+				try {
+					// Step 1: Get challenge from our server
+					const chalRes = await fetch('/api/v1/auth/webauthn/challenge', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ email: document.getElementById('emailInput').value })
+					});
+
+					if (!chalRes.ok) throw new Error('Could not get challenge');
+					const chalData = await chalRes.json();
+
+					// Step 2: Trigger Touch ID / platform authenticator
+					const credential = await navigator.credentials.get({
+						publicKey: {
+							challenge: base64urlToBuffer(chalData.challenge),
+							rpId: chalData.rp.id,
+							userVerification: 'required',
+							timeout: 60000,
+							allowCredentials: []
+						}
+					});
+
+					// Step 3: Verify with server
+					const assertionResponse = credential.response;
+					const verifyRes = await fetch('/api/v1/auth/webauthn/verify', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							email: document.getElementById('emailInput').value,
+							credential_id: bufferToBase64url(credential.rawId),
+							client_data_json: bufferToBase64url(assertionResponse.clientDataJSON),
+							authenticator_data: bufferToBase64url(assertionResponse.authenticatorData),
+							signature: bufferToBase64url(assertionResponse.signature)
+						})
+					});
+
+					if (!verifyRes.ok) throw new Error('Verification failed');
+					const verifyData = await verifyRes.json();
+
+					// Success
+					btn.className = 'touchid-btn success';
+					icon.textContent = '✅';
+					label.textContent = 'Authenticated!';
+					msg.className = 'status-msg ok';
+					msg.textContent = 'Welcome back, Mr. Hammer.';
+
+					// Store token and redirect
+					localStorage.setItem('token', verifyData.token);
+					setTimeout(() => {
+						window.location.href = '/dashboard';
+					}, 800);
+				} catch (err) {
+					console.error('Touch ID error:', err);
+
+					if (err.name === 'NotAllowedError') {
+						btn.className = 'touchid-btn error';
+						icon.textContent = '❌';
+						label.textContent = 'Touch ID cancelled';
+						msg.className = 'status-msg err';
+						msg.textContent = 'Touch ID was cancelled or timed out';
+					} else if (err.name === 'InvalidStateError' || err.message?.includes('No credentials')) {
+						// First time — need to register, fall through to password
+						btn.className = 'touchid-btn';
+						icon.textContent = '🧬';
+						label.textContent = 'Register Touch ID (sign in first)';
+						msg.className = 'status-msg';
+						msg.textContent = 'Sign in with password once to enable Touch ID';
+					} else {
+						btn.className = 'touchid-btn error';
+						icon.textContent = '⚠️';
+						label.textContent = 'Touch ID unavailable';
+						msg.className = 'status-msg err';
+						msg.textContent = err.message || 'Authentication error';
+					}
+
+					// Reset button after 3s
+					setTimeout(() => {
+						btn.className = 'touchid-btn';
+						icon.textContent = '🦾';
+						label.textContent = 'Sign in with Touch ID';
+						msg.textContent = '';
+					}, 3000);
+				}
+			}
+
+			// ── Password login ────────────────────────────────────────────────────────
+
+			async function doPasswordLogin(e) {
+				e.preventDefault();
+				const email = document.getElementById('emailInput').value;
+				const password = document.getElementById('passwordInput').value;
+				const btn = document.getElementById('submitBtn');
+				const msg = document.getElementById('statusMsg');
+
+				btn.disabled = true;
+				btn.textContent = 'Signing in…';
+				msg.className = 'status-msg';
+				msg.textContent = '';
+
+				try {
+					const res = await fetch('/api/v1/auths/signin', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ email, password })
+					});
+
+					if (!res.ok) {
+						const err = await res.json();
+						throw new Error(err.detail || 'Invalid credentials');
+					}
+
+					const data = await res.json();
+					localStorage.setItem('token', data.token);
+
+					msg.className = 'status-msg ok';
+					msg.textContent = '✅ Welcome back, Mr. Hammer!';
+
+					// Register Touch ID for next time
+					await registerTouchId(data.token, email, data.name || 'Ronald Majewski');
+					setTimeout(() => {
+						window.location.href = '/dashboard';
+					}, 600);
+				} catch (err) {
+					msg.className = 'status-msg err';
+					msg.textContent = err.message;
+					btn.disabled = false;
+					btn.textContent = 'Sign In';
+				}
+			}
+
+			// ── Register Touch ID after password login ────────────────────────────────
+
+			async function registerTouchId(token, email, displayName) {
+				if (!window.PublicKeyCredential) return;
+
+				try {
+					const chalRes = await fetch('/api/v1/auth/webauthn/challenge', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ email })
+					});
+					if (!chalRes.ok) return;
+					const chalData = await chalRes.json();
+
+					await navigator.credentials.create({
+						publicKey: {
+							challenge: base64urlToBuffer(chalData.challenge),
+							rp: { name: "HaMm3r's Agent OS", id: chalData.rp.id },
+							user: {
+								id: new TextEncoder().encode(email),
+								name: email,
+								displayName: displayName
+							},
+							pubKeyCredParams: [
+								{ type: 'public-key', alg: -7 },
+								{ type: 'public-key', alg: -257 }
+							],
+							authenticatorSelection: {
+								authenticatorAttachment: 'platform',
+								userVerification: 'required',
+								residentKey: 'preferred'
+							},
+							timeout: 60000
+						}
+					});
+
+					console.log('Touch ID registered for future logins');
+				} catch (err) {
+					// Silent fail — Touch ID registration is optional
+					console.log('Touch ID registration skipped:', err.name);
+				}
+			}
+
+			// ── Helpers ────────────────────────────────────────────────────────────────
+
+			function base64urlToBuffer(base64url) {
+				const base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
+				const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+				const binary = atob(padded);
+				const buffer = new Uint8Array(binary.length);
+				for (let i = 0; i < binary.length; i++) buffer[i] = binary.charCodeAt(i);
+				return buffer.buffer;
+			}
+
+			function bufferToBase64url(buffer) {
+				const bytes = new Uint8Array(buffer);
+				let str = '';
+				for (const b of bytes) str += String.fromCharCode(b);
+				return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+			}
+
+			// ── Auto check Touch ID availability ─────────────────────────────────────
+
+			(async function checkTouchId() {
+				if (!window.PublicKeyCredential) return;
+				try {
+					const avail = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+					if (!avail) {
+						document.getElementById('touchIdBtn').style.display = 'none';
+					}
+				} catch {}
+			})();
+
+			// ── Check existing token ───────────────────────────────────────────────────
+
+			(async function checkExistingToken() {
+				const token = localStorage.getItem('token');
+				if (!token) return;
+				try {
+					const res = await fetch('/api/v1/auths/', {
+						headers: { Authorization: `Bearer ${token}` }
+					});
+					if (res.ok) {
+						window.location.href = '/dashboard';
+					}
+				} catch {}
+			})();
+		</script>
+	</body>
+</html>

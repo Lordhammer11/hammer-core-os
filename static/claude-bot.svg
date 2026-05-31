@@ -1,0 +1,438 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <!-- Skin / face -->
+    <radialGradient id="skinGrad" cx="42%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFE8C8"/>
+      <stop offset="60%" stop-color="#E8C890"/>
+      <stop offset="100%" stop-color="#C8A060"/>
+    </radialGradient>
+    <!-- Gray steel armor -->
+    <radialGradient id="armorLight" cx="30%" cy="25%" r="70%">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="40%" stop-color="#9AAABB"/>
+      <stop offset="100%" stop-color="#2E3848"/>
+    </radialGradient>
+    <radialGradient id="armorMid" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#B0BCC8"/>
+      <stop offset="55%" stop-color="#6A7A8A"/>
+      <stop offset="100%" stop-color="#1E2838"/>
+    </radialGradient>
+    <radialGradient id="armorDark" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#7A8898"/>
+      <stop offset="100%" stop-color="#18202E"/>
+    </radialGradient>
+    <!-- Helmet gold/silver -->
+    <radialGradient id="helmetGrad" cx="35%" cy="25%" r="65%">
+      <stop offset="0%" stop-color="#F0F4FA"/>
+      <stop offset="40%" stop-color="#A8B8C8"/>
+      <stop offset="100%" stop-color="#283848"/>
+    </radialGradient>
+    <!-- Blue gem -->
+    <radialGradient id="gemGrad" cx="30%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#CCFFFF"/>
+      <stop offset="35%" stop-color="#00D8FF"/>
+      <stop offset="100%" stop-color="#003399"/>
+    </radialGradient>
+    <!-- Cape -->
+    <linearGradient id="capeLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2222"/>
+      <stop offset="50%" stop-color="#EE0000"/>
+      <stop offset="100%" stop-color="#990000"/>
+    </linearGradient>
+    <linearGradient id="capeDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CC0000"/>
+      <stop offset="100%" stop-color="#550000"/>
+    </linearGradient>
+    <linearGradient id="capeShadow" x1="0%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#880000"/>
+      <stop offset="100%" stop-color="#220000"/>
+    </linearGradient>
+    <!-- Background -->
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#1A2540"/>
+      <stop offset="100%" stop-color="#060A12"/>
+    </radialGradient>
+    <!-- Hair -->
+    <linearGradient id="hairGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#D4A830"/>
+      <stop offset="50%" stop-color="#B88820"/>
+      <stop offset="100%" stop-color="#806010"/>
+    </linearGradient>
+    <!-- Filters -->
+    <filter id="gemGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="eyeGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="capeEdge" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ══ BACKGROUND ══ -->
+  <rect width="400" height="500" fill="#060A12"/>
+  <!-- Dramatic radial bg -->
+  <ellipse cx="200" cy="260" rx="195" ry="235" fill="url(#bgGrad)"/>
+  <!-- Border frame -->
+  <rect x="3" y="3" width="394" height="494" rx="12" fill="none" stroke="#818CF8" stroke-width="3"/>
+  <rect x="7" y="7" width="386" height="486" rx="10" fill="none" stroke="#818CF8" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- CAPE — massive, blowing hard right at steep angle     -->
+  <!-- Attached at shoulders, sweeping upper-left to lower-right -->
+  <!-- ══════════════════════════════════════════════════════ -->
+
+  <!-- Cape deepest shadow (furthest back layer) -->
+  <path d="
+    M 155 175
+    C 165 165, 185 158, 205 160
+    C 230 162, 258 175, 278 198
+    C 300 224, 316 256, 322 284
+    C 330 316, 326 348, 318 368
+    C 310 388, 298 398, 286 394
+    C 274 390, 268 374, 272 356
+    C 276 336, 290 314, 288 294
+    C 286 276, 272 266, 256 274
+    C 242 282, 234 302, 232 322
+    C 230 342, 236 360, 230 370
+    C 224 380, 210 374, 202 360
+    C 194 346, 192 324, 196 304
+    C 200 286, 210 270, 206 256
+    C 202 244, 186 240, 172 248
+    C 160 256, 154 274, 152 294
+    L 148 320
+    C 144 340, 148 358, 140 366
+    C 132 374, 116 368, 108 352
+    C 100 336, 102 312, 108 290 Z
+  " fill="#220000" opacity="0.75"/>
+
+  <!-- Cape main body -->
+  <path d="
+    M 148 168
+    C 162 158, 188 152, 212 156
+    C 238 160, 268 176, 290 204
+    C 312 232, 326 266, 330 298
+    C 334 330, 328 362, 316 382
+    C 304 402, 288 410, 272 404
+    C 256 398, 248 380, 254 360
+    C 260 340, 278 316, 276 294
+    C 274 274, 258 262, 240 270
+    C 224 278, 214 300, 212 322
+    C 210 344, 218 364, 210 374
+    C 202 384, 184 378, 174 362
+    C 164 346, 162 322, 168 300
+    C 174 280, 186 264, 180 248
+    C 174 234, 156 230, 142 240
+    C 130 250, 124 270, 122 294
+    C 120 316, 126 340, 118 354
+    C 110 368, 94 364, 86 348
+    C 78 332, 80 306, 88 282
+    C 96 258, 112 238, 116 216
+    C 120 196, 112 178, 120 168
+    C 130 158, 142 162, 148 168 Z
+  " fill="url(#capeLight)" stroke="#110000" stroke-width="3" filter="url(#capeEdge)"/>
+
+  <!-- Cape inner shadow fold (depth) -->
+  <path d="
+    M 180 172
+    C 186 186, 188 206, 184 228
+    C 180 250, 170 268, 168 288
+    C 166 308, 172 326, 168 342
+    C 164 358, 154 368, 148 364
+  " fill="none" stroke="#550000" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Cape highlight streak 1 (wind crease) -->
+  <path d="
+    M 155 166
+    C 178 158, 210 158, 236 172
+    C 260 186, 280 210, 292 238
+  " fill="none" stroke="#FF6666" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- Cape highlight streak 2 -->
+  <path d="
+    M 162 174
+    C 182 168, 208 168, 230 180
+    C 252 194, 268 218, 276 248
+  " fill="none" stroke="#FF8888" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+
+  <!-- Cape far-edge highlight -->
+  <path d="
+    M 308 222 C 322 250, 332 280, 328 312 C 324 342, 312 370, 296 392
+  " fill="none" stroke="#FF4444" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- Cape wind ripple folds -->
+  <path d="M 240 280 C 248 296, 252 316, 248 334 C 244 352, 234 364, 228 368" 
+        fill="none" stroke="#770000" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 200 310 C 204 328, 204 348, 198 364" 
+        fill="none" stroke="#880000" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- BODY — tall heroic Thor build, 3/4 right   -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <!-- Waist / lower torso -->
+  <path d="M 118 340 C 112 360, 110 385, 112 410 L 270 410 C 272 385, 268 360, 260 340 Z" 
+        fill="url(#armorMid)" stroke="#111820" stroke-width="2.5"/>
+
+  <!-- Belt -->
+  <rect x="110" y="328" width="158" height="20" rx="5" fill="url(#armorDark)" stroke="#111820" stroke-width="2.5"/>
+  <rect x="178" y="326" width="22" height="24" rx="4" fill="url(#armorMid)" stroke="#111820" stroke-width="2"/>
+  <circle cx="189" cy="338" r="6" fill="url(#gemGrad)" filter="url(#gemGlow)"/>
+
+  <!-- Main chest torso -->
+  <path d="M 108 195 C 104 210, 102 240, 104 270 C 106 300, 110 318, 118 340 L 260 340 C 268 318, 272 300, 274 270 C 276 240, 274 210, 270 195 Z" 
+        fill="url(#armorLight)" stroke="#111820" stroke-width="3"/>
+
+  <!-- Chest armor panel lines (Asgardian detail) -->
+  <line x1="189" y1="198" x2="189" y2="340" stroke="#1A2838" stroke-width="2" opacity="0.45"/>
+  <line x1="108" y1="248" x2="274" y2="248" stroke="#1A2838" stroke-width="1.5" opacity="0.35"/>
+  <line x1="110" y1="290" x2="272" y2="290" stroke="#1A2838" stroke-width="1.5" opacity="0.3"/>
+  <!-- Chest highlight (cel shade top-left) -->
+  <path d="M 112 200 C 108 220, 108 248, 112 270 L 130 270 C 126 248, 126 220, 132 200 Z" 
+        fill="#E2E8F0" opacity="0.15"/>
+
+  <!-- Chest armor cross straps (Asgardian style) -->
+  <path d="M 128 198 C 140 230, 148 268, 150 300" stroke="#7A8898" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 252 198 C 240 230, 232 268, 228 300" stroke="#7A8898" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 128 230 L 252 230" stroke="#7A8898" stroke-width="2" fill="none" opacity="0.35"/>
+  <path d="M 124 270 L 256 270" stroke="#7A8898" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+  <!-- ── GLOWING BLUE CHEST GEM (Arc-reactor style) ── -->
+  <circle cx="189" cy="255" r="28" fill="#000D1A" stroke="#001A33" stroke-width="2"/>
+  <circle cx="189" cy="255" r="24" fill="url(#gemGrad)" filter="url(#gemGlow)"/>
+  <circle cx="189" cy="255" r="16" fill="#00EEFF" opacity="0.35"/>
+  <circle cx="182" cy="248" r="6" fill="white" opacity="0.6"/>
+  <circle cx="189" cy="255" r="24" fill="none" stroke="#003366" stroke-width="2.5"/>
+  <!-- Outer glow ring -->
+  <circle cx="189" cy="255" r="30" fill="none" stroke="#00D8FF" stroke-width="1.2" opacity="0.3" filter="url(#gemGlow)"/>
+
+  <!-- ── SHOULDERS (Asgardian pauldrons) ── -->
+  <!-- Left shoulder (receding slightly) -->
+  <ellipse cx="102" cy="204" rx="28" ry="20" fill="url(#armorMid)" stroke="#111820" stroke-width="3" transform="rotate(-12 102 204)"/>
+  <ellipse cx="100" cy="200" rx="16" ry="10" fill="#C0CCD8" opacity="0.15"/>
+  <!-- Left shoulder detail -->
+  <path d="M 78 196 C 84 188, 100 186, 116 192" stroke="#9AAABB" stroke-width="1.5" fill="none" opacity="0.45"/>
+
+  <!-- Right shoulder (facing, dominant) -->
+  <ellipse cx="276" cy="200" rx="34" ry="22" fill="url(#armorLight)" stroke="#111820" stroke-width="3" transform="rotate(10 276 200)"/>
+  <ellipse cx="272" cy="196" rx="18" ry="11" fill="#E2E8F0" opacity="0.18"/>
+  <!-- Right shoulder Asgardian trim -->
+  <path d="M 248 192 C 260 182, 286 180, 302 190" stroke="#C0CCD8" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M 250 200 C 262 194, 284 192, 298 198" stroke="#9AAABB" stroke-width="1.2" fill="none" opacity="0.35"/>
+
+  <!-- ── CAPE CLASP at neck ── -->
+  <circle cx="156" cy="186" r="9" fill="url(#armorMid)" stroke="#111820" stroke-width="2"/>
+  <circle cx="222" cy="186" r="9" fill="url(#armorMid)" stroke="#111820" stroke-width="2"/>
+  <line x1="165" y1="186" x2="213" y2="186" stroke="#7A8898" stroke-width="3"/>
+  <circle cx="189" cy="186" r="6" fill="url(#gemGrad)" opacity="0.8"/>
+
+  <!-- ── ARMS ── -->
+  <!-- Left arm -->
+  <path d="M 78 205 C 70 220, 66 250, 68 280 C 70 300, 76 316, 80 330 L 108 330 C 108 316, 106 300, 106 280 C 106 250, 104 220, 108 205 Z"
+        fill="url(#armorMid)" stroke="#111820" stroke-width="2.5"/>
+  <!-- Left forearm armor band -->
+  <rect x="68" y="282" width="40" height="12" rx="4" fill="url(#armorDark)" stroke="#111820" stroke-width="2"/>
+
+  <!-- Right arm (more prominent) -->
+  <path d="M 272 205 C 278 218, 282 248, 280 278 C 278 300, 272 316, 268 330 L 302 330 C 306 316, 310 300, 308 278 C 306 248, 302 218, 294 205 Z"
+        fill="url(#armorLight)" stroke="#111820" stroke-width="2.5"/>
+  <!-- Right arm highlight -->
+  <path d="M 294 208 C 298 225, 300 252, 298 278 L 306 278 C 308 252, 306 225, 300 208 Z" fill="#E2E8F0" opacity="0.12"/>
+  <!-- Right forearm armor band -->
+  <rect x="270" y="280" width="40" height="12" rx="4" fill="url(#armorDark)" stroke="#111820" stroke-width="2"/>
+
+  <!-- Gauntlets -->
+  <ellipse cx="89" cy="338" rx="22" ry="13" fill="url(#armorDark)" stroke="#111820" stroke-width="2.5"/>
+  <ellipse cx="287" cy="338" rx="26" ry="15" fill="url(#armorMid)" stroke="#111820" stroke-width="2.5"/>
+  <!-- Right gauntlet knuckle detail -->
+  <line x1="266" y1="337" x2="308" y2="337" stroke="#111820" stroke-width="1.5" opacity="0.5"/>
+  <line x1="268" y1="342" x2="306" y2="342" stroke="#111820" stroke-width="1" opacity="0.35"/>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- NECK                                       -->
+  <!-- ══════════════════════════════════════════ -->
+  <path d="M 170 140 C 166 152, 165 165, 168 180 L 210 180 C 213 165, 212 152, 208 140 Z" 
+        fill="url(#skinGrad)" stroke="#111820" stroke-width="2"/>
+  <!-- Neck armor collar -->
+  <path d="M 162 174 C 164 166, 172 162, 189 162 C 206 162, 214 166, 216 174 L 216 186 L 162 186 Z"
+        fill="url(#armorMid)" stroke="#111820" stroke-width="2"/>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- HEAD — heroic Thor face, 3/4 right turn    -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <!-- Head shape -->
+  <ellipse cx="192" cy="102" rx="52" ry="56" fill="url(#skinGrad)" stroke="#111820" stroke-width="3"/>
+
+  <!-- Jaw definition (3/4 right — right side more visible) -->
+  <path d="M 148 112 C 144 124, 146 140, 154 152 C 162 162, 176 168, 192 168 C 208 168, 220 162, 226 152 C 234 140, 234 124, 230 112"
+        fill="url(#skinGrad)" stroke="#111820" stroke-width="2.5"/>
+
+  <!-- Right cheekbone highlight (3/4) -->
+  <ellipse cx="218" cy="108" rx="16" ry="20" fill="#FFE8C8" opacity="0.2"/>
+  <!-- Left side shadow (receding) -->
+  <path d="M 148 90 C 144 100, 144 114, 148 128 C 152 140, 158 150, 162 156"
+        fill="none" stroke="#C8A060" stroke-width="10" stroke-linecap="round" opacity="0.18"/>
+
+  <!-- ── EYES ── piercing, heroic -->
+  <!-- Eye sockets / brow shadow -->
+  <ellipse cx="176" cy="96" rx="20" ry="12" fill="#C89050" opacity="0.25"/>
+  <ellipse cx="212" cy="94" rx="22" ry="13" fill="#C89050" opacity="0.2"/>
+
+  <!-- Left eye (partially receding, 3/4) -->
+  <ellipse cx="175" cy="96" rx="14" ry="11" fill="#1A0800"/>
+  <ellipse cx="175" cy="96" rx="11" ry="9" fill="#2244AA"/>
+  <ellipse cx="175" cy="96" rx="7" ry="6" fill="#4488FF"/>
+  <ellipse cx="175" cy="96" rx="4" ry="3.5" fill="#88CCFF"/>
+  <circle cx="172" cy="92" r="3" fill="white" opacity="0.8"/>
+
+  <!-- Right eye (dominant, facing) -->
+  <ellipse cx="212" cy="95" rx="16" ry="12" fill="#1A0800"/>
+  <ellipse cx="212" cy="95" rx="13" ry="10" fill="#2244AA"/>
+  <ellipse cx="212" cy="95" rx="8" ry="7" fill="#4488FF"/>
+  <ellipse cx="212" cy="95" rx="5" ry="4" fill="#88CCFF"/>
+  <circle cx="208" cy="90" r="3.5" fill="white" opacity="0.85"/>
+
+  <!-- Brows (strong, heroic) -->
+  <path d="M 160 82 C 166 76, 180 75, 190 78" stroke="#8B6020" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M 198 77 C 206 73, 222 74, 230 80" stroke="#8B6020" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- Brow highlight -->
+  <path d="M 162 81 C 168 75, 180 74, 188 77" stroke="#D4A030" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.4"/>
+
+  <!-- Nose (3/4, right side) -->
+  <path d="M 196 100 C 196 112, 196 122, 194 128 C 196 132, 204 134, 210 132" 
+        stroke="#C09050" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Mouth — determined, slight smirk right -->
+  <path d="M 172 144 C 182 148, 194 149, 208 146 C 214 144, 218 140, 214 138"
+        stroke="#AA7040" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Lip highlight -->
+  <path d="M 176 143 C 186 147, 196 148, 206 145" stroke="#E8B878" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+  <!-- Ear (right side visible) -->
+  <ellipse cx="236" cy="106" rx="10" ry="16" fill="url(#skinGrad)" stroke="#111820" stroke-width="2"/>
+  <path d="M 232 98 C 236 102, 238 108, 236 116" stroke="#C8A060" stroke-width="2" fill="none" opacity="0.4"/>
+
+  <!-- ── BLONDE HAIR (Thor-style, flowing left) ── -->
+  <!-- Hair behind head -->
+  <path d="M 142 80 C 134 72, 128 60, 130 48 C 132 36, 140 28, 148 32 C 144 42, 144 58, 148 72 Z"
+        fill="url(#hairGrad)" stroke="#6A4810" stroke-width="1.5"/>
+  <!-- Main hair mass -->
+  <path d="M 148 30 C 156 20, 172 16, 188 18 C 204 20, 218 28, 224 40 L 232 52 C 226 44, 212 36, 196 34 C 180 32, 166 36, 156 46 C 150 54, 148 64, 148 76 C 145 68, 142 54, 148 30 Z"
+        fill="url(#hairGrad)" stroke="#6A4810" stroke-width="2"/>
+  <!-- Hair strands detail -->
+  <path d="M 152 32 C 148 44, 144 58, 144 74" stroke="#D4A030" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M 140 76 C 136 66, 132 54, 134 42 C 136 32, 142 26, 148 28" 
+        fill="url(#hairGrad)" stroke="#6A4810" stroke-width="1.5"/>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- THOR HELMET — Asgardian, winged            -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <!-- Helmet dome -->
+  <path d="M 148 76 C 148 44, 236 44, 236 76 L 230 68 C 228 42, 170 42, 166 68 Z"
+        fill="url(#helmetGrad)" stroke="#111820" stroke-width="3"/>
+  <path d="M 152 70 C 152 46, 232 46, 232 70" fill="url(#helmetGrad)"/>
+
+  <!-- Helmet highlight -->
+  <ellipse cx="178" cy="56" rx="20" ry="12" fill="#F0F4FA" opacity="0.22"/>
+
+  <!-- Helmet dome panels/fluting -->
+  <path d="M 192 46 L 192 72" stroke="#8A9AAA" stroke-width="2" opacity="0.5"/>
+  <path d="M 170 48 L 164 70" stroke="#8A9AAA" stroke-width="1.2" opacity="0.35"/>
+  <path d="M 214 48 L 220 70" stroke="#8A9AAA" stroke-width="1.2" opacity="0.35"/>
+  <path d="M 158 54 L 154 70" stroke="#8A9AAA" stroke-width="1" opacity="0.25"/>
+
+  <!-- Helmet brim (strong, Asgardian) -->
+  <path d="M 148 74 Q 192 82, 236 74" stroke="#C0CCD8" stroke-width="4" fill="none"/>
+  <path d="M 148 74 Q 192 82, 236 74" stroke="#111820" stroke-width="5.5" fill="none" opacity="0.4"/>
+
+  <!-- Helmet face guard/nose piece -->
+  <path d="M 178 74 C 176 84, 176 96, 178 104 C 180 108, 186 110, 192 110 C 198 110, 202 106, 202 100 C 202 92, 200 82, 196 74 Z"
+        fill="url(#helmetGrad)" stroke="#111820" stroke-width="2.5"/>
+  <line x1="187" y1="76" x2="187" y2="108" stroke="#8A9AAA" stroke-width="1" opacity="0.4"/>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- WINGS — large, dramatic, comic-book style  -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <!-- LEFT WING (partially back, 3/4 view) -->
+  <g>
+    <path d="
+      M 150 68
+      C 138 60, 118 52, 96 52
+      C 76 52, 60 60, 58 72
+      C 56 82, 68 90, 86 90
+      C 70 94, 54 100, 50 114
+      C 52 112, 68 104, 88 102
+      C 72 112, 60 126, 62 138
+      C 68 130, 82 118, 98 112
+      C 82 122, 72 136, 76 146
+      C 84 136, 100 124, 116 118
+      C 100 128, 90 142, 94 150
+      C 102 138, 118 124, 134 118
+      C 124 126, 118 138, 120 146
+      C 128 134, 140 120, 150 114 Z
+    " fill="url(#helmetGrad)" stroke="#111820" stroke-width="2.5"/>
+    <!-- Wing feather lines -->
+    <path d="M 146 70 C 128 62, 104 56, 80 60" stroke="#6A7A88" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path d="M 142 82 C 120 76, 94 78, 70 88" stroke="#6A7A88" stroke-width="1.3" fill="none" opacity="0.45"/>
+    <path d="M 138 96 C 116 92, 90 96, 68 108" stroke="#6A7A88" stroke-width="1.2" fill="none" opacity="0.4"/>
+    <path d="M 132 110 C 112 108, 90 114, 72 126" stroke="#6A7A88" stroke-width="1" fill="none" opacity="0.35"/>
+    <!-- Wing shadow edge -->
+    <path d="M 62 72 C 60 84, 64 96, 72 106 C 80 116, 92 122, 102 124" stroke="#2E3848" stroke-width="4" fill="none" opacity="0.4"/>
+  </g>
+
+  <!-- RIGHT WING (full, facing, dramatic) -->
+  <g>
+    <path d="
+      M 234 66
+      C 250 56, 278 46, 310 46
+      C 338 46, 360 56, 366 70
+      C 372 82, 358 92, 336 92
+      C 356 98, 378 108, 380 124
+      C 374 120, 352 110, 324 108
+      C 346 120, 362 136, 358 150
+      C 348 138, 328 122, 304 116
+      C 322 130, 332 148, 326 160
+      C 314 144, 294 126, 270 118
+      C 284 132, 290 150, 282 162
+      C 272 146, 256 128, 244 120
+      C 254 134, 258 150, 250 160
+      C 242 144, 234 126, 232 112 Z
+    " fill="url(#helmetGrad)" stroke="#111820" stroke-width="3"/>
+    <!-- Wing highlight top edge -->
+    <path d="M 238 68 C 264 54, 300 48, 334 56" stroke="#F0F4FA" stroke-width="3" fill="none" opacity="0.3"/>
+    <!-- Wing feather lines (detailed, comic style) -->
+    <path d="M 240 72 C 270 58, 310 52, 348 62" stroke="#6A7A88" stroke-width="1.8" fill="none" opacity="0.55"/>
+    <path d="M 242 84 C 272 72, 308 70, 342 78" stroke="#6A7A88" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path d="M 244 96 C 272 86, 306 86, 334 96" stroke="#6A7A88" stroke-width="1.4" fill="none" opacity="0.45"/>
+    <path d="M 244 108 C 270 100, 300 100, 322 112" stroke="#6A7A88" stroke-width="1.2" fill="none" opacity="0.4"/>
+    <path d="M 242 120 C 266 114, 294 116, 312 128" stroke="#6A7A88" stroke-width="1" fill="none" opacity="0.35"/>
+    <path d="M 240 132 C 260 128, 282 132, 296 144" stroke="#6A7A88" stroke-width="1" fill="none" opacity="0.3"/>
+    <!-- Wing underside shadow -->
+    <path d="M 360 92 C 368 108, 364 126, 350 140 C 338 154, 318 162, 298 162" 
+          stroke="#1E2838" stroke-width="5" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- COMIC BOOK SPEED LINES (wind / motion)     -->
+  <!-- ══════════════════════════════════════════ -->
+  <!-- Diagonal speed lines suggesting wind -->
+  <line x1="178" y1="164" x2="340" y2="148" stroke="#FF3333" stroke-width="1.2" opacity="0.12" stroke-dasharray="8,5"/>
+  <line x1="180" y1="172" x2="344" y2="165" stroke="#FF3333" stroke-width="0.8" opacity="0.08" stroke-dasharray="6,6"/>
+  <line x1="182" y1="182" x2="340" y2="184" stroke="#FF3333" stroke-width="0.8" opacity="0.08" stroke-dasharray="5,7"/>
+
+  <!-- Gem ambient light cast on chest -->
+  <ellipse cx="189" cy="300" rx="35" ry="6" fill="#00D8FF" opacity="0.06" filter="url(#gemGlow)"/>
+
+  <!-- Corner comic details -->
+  <path d="M 3 3 L 30 3 L 3 30" fill="none" stroke="#818CF8" stroke-width="1" opacity="0.4"/>
+  <path d="M 397 3 L 370 3 L 397 30" fill="none" stroke="#818CF8" stroke-width="1" opacity="0.4"/>
+  <path d="M 3 497 L 30 497 L 3 470" fill="none" stroke="#818CF8" stroke-width="1" opacity="0.4"/>
+  <path d="M 397 497 L 370 497 L 397 470" fill="none" stroke="#818CF8" stroke-width="1" opacity="0.4"/>
+</svg>
