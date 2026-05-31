@@ -14,14 +14,13 @@ RUN npm ci --force
 
 COPY . .
 ENV APP_BUILD_HASH=${BUILD_HASH}
-ENV NODE_OPTIONS="--max-old-space-size=6144"
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
 ######## Backend + final image ########
 FROM python:3.11-slim-bookworm
 
 ENV HOME=/root
-ENV WEBUI_ORIGIN="https://hammer-corp-os-production.up.railway.app"
 ENV GLOBAL_LOG_LEVEL="WARNING"
 ENV RESET_CONFIG_ON_START=False
 ENV FRONTEND_BUILD_DIR=/app/build
@@ -37,7 +36,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Python deps
 COPY ./backend/requirements.txt ./requirements.txt
 RUN pip3 install uv && \
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu --no-cache-dir && \
     uv pip install --system -r requirements.txt --no-cache-dir
 
 # Copy backend
