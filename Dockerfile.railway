@@ -10,17 +10,19 @@ WORKDIR /app
 RUN apk add --no-cache git
 
 COPY package.json package-lock.json ./
-RUN npm ci --force
+RUN npm ci --prefer-offline
 
 COPY . .
 ENV APP_BUILD_HASH=${BUILD_HASH}
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=3072"
 RUN npm run build
 
 ######## Backend + final image ########
 FROM python:3.11-slim-bookworm
 
 ENV HOME=/root
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 ENV GLOBAL_LOG_LEVEL="WARNING"
 ENV RESET_CONFIG_ON_START=False
 ENV FRONTEND_BUILD_DIR=/app/build
