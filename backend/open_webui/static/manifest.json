@@ -1,0 +1,45 @@
+{
+  "name": "HaMm3r's Agent OS",
+  "short_name": "HaMm3r OS",
+  "description": "Your personal AI Agent Operating System — powered by Gemini, Claude & Ollama",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#090D16",
+  "theme_color": "#090D16",
+  "categories": ["productivity", "utilities", "ai"],
+  "lang": "en-US",
+  "icons": [
+    { "src": "/static/hammer-32.png",  "sizes": "32x32",   "type": "image/png" },
+    { "src": "/static/hammer-96.png",  "sizes": "96x96",   "type": "image/png" },
+    { "src": "/static/hammer-180.png", "sizes": "180x180", "type": "image/png", "purpose": "apple touch icon" },
+    { "src": "/static/hammer-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/static/hammer-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/static/hammer-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "HaMm3r's Agent OS"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Chat",
+      "short_name": "Chat",
+      "description": "Start a new AI conversation",
+      "url": "/",
+      "icons": [{ "src": "/static/hammer-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Knowledge Base",
+      "short_name": "KB",
+      "description": "Open HaMm3r Knowledge Base",
+      "url": "/static/obsidian.html",
+      "icons": [{ "src": "/static/hammer-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

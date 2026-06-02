@@ -1,197 +1,50 @@
-/* HaMm3r's Agent OS — Custom Theme Loader */
-/* Imports the full SaaS Native dark theme */
-@import url('/static/themes/hammer.css');
-
-/* Inter font from local assets */
-@font-face {
-	font-family: 'Inter';
-	src: url('/assets/fonts/Inter-Variable.ttf') format('truetype');
-	font-weight: 100 900;
-	font-display: swap;
-}
-
-/* Force dark mode always — HaMm3r's is dark-first */
-html {
-	color-scheme: dark !important;
-}
-html:not(.light) {
-	/* Ensure dark class is always present */
-}
-
 /* ============================================================
-   HaMm3r OS — Enhanced Branding Additions
+   HaMm3r's Agent OS — custom.css
+   Fallback layer using original Utility Tool tokens
+   Primary injection happens via loader.js (deferred JS wins)
    ============================================================ */
 
-/* ----------------------------------------------------------
-   1. Top Navbar / Sidebar Logo — Replace with HaMm3r Branding
-   ---------------------------------------------------------- */
-#logo,
-.logo,
-.app-name,
-nav img,
-.sidebar-logo,
-.navbar-brand,
-[class*='logo'] {
-	content: '';
-	/* Hide the original Open WebUI logo/name text */
+/* ── ORIGINAL UTILITY TOOL PALETTE ──
+   Canvas:   #090D16
+   Cards:    #131B2E
+   Surface2: #0D1120
+   Cyan:     #00D8FF
+   Lavender: #818CF8
+   Purple:   #A855F7
+   Border:   rgba(255,255,255,0.06)
+   ──────────────────────────────── */
+
+/* Tailwind v4 color remap (oklch format matching the palette) */
+:root,
+html,
+html.dark,
+.dark {
+  --color-gray-950: oklch(5.5% 0.022 265) !important;
+  --color-gray-900: oklch(7.5% 0.024 265) !important;
+  --color-gray-850: oklch(9.5% 0.026 265) !important;
+  --color-gray-800: oklch(12%  0.030 265) !important;
+  --color-gray-700: oklch(15%  0.028 265) !important;
+  --color-gray-600: oklch(18%  0.025 265) !important;
+  --color-gray-500: oklch(26%  0.020 265) !important;
+  --color-gray-400: oklch(37%  0.016 265) !important;
+  --color-gray-300: oklch(48%  0.014 265) !important;
+  --color-gray-200: oklch(64%  0.012 265) !important;
+  --color-gray-100: oklch(81%  0.009 265) !important;
+  --color-gray-50:  oklch(90%  0.006 265) !important;
 }
 
-/* Replace app name text nodes / spans with HaMm3r label */
-#logo::before,
-.logo::before,
-.app-name::before,
-.navbar-brand::before {
-	content: 'HaMm3r OS';
-	font-family: 'Inter', sans-serif;
-	font-weight: 700;
-	font-size: 1.1rem;
-	letter-spacing: 0.04em;
-	background: linear-gradient(90deg, #00d8ff 0%, #818cf8 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-	display: inline-block;
+/* Canvas */
+html, body {
+  background-color: #090D16 !important;
+  color: #E2E8F0 !important;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
 }
 
-/* Hide original img/svg inside nav so our pseudo-content shows */
-nav img,
-.sidebar-logo img,
-#logo img,
-.logo img {
-	display: none !important;
-}
+/* Scrollbars */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,216,255,0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,216,255,0.4); }
 
-/* ----------------------------------------------------------
-   2. Sidebar Background — #090D16 Canvas Color
-   ---------------------------------------------------------- */
-#sidebar,
-.sidebar,
-[id*='sidebar'],
-[class*='sidebar'],
-nav.sidebar,
-aside {
-	background-color: #090d16 !important;
-	border-right: 1px solid rgba(129, 140, 248, 0.12) !important;
-}
-
-/* ----------------------------------------------------------
-   3. Assistant Chat Bubbles — Card Color + Lavender Left Border
-   ---------------------------------------------------------- */
-/* Open WebUI typically wraps assistant messages in these selectors */
-.message.assistant,
-.chat-message.assistant,
-[data-role='assistant'] .message-content,
-.message-bubble.assistant,
-.assistant-message,
-div[class*='assistant'] > .prose,
-div[class*='assistant'] > div > .prose,
-.w-full.rounded.px-5 {
-	background-color: #131b2e !important;
-	border-left: 3px solid #818cf8 !important;
-	border-radius: 0.5rem !important;
-	padding: 0.75rem 1rem !important;
-}
-
-/* ----------------------------------------------------------
-   4. Send Button — Cyan Glow Effect
-   ---------------------------------------------------------- */
-button[type='submit'],
-button[aria-label='Send message'],
-button[aria-label*='Send'],
-.send-button,
-#send-message-button,
-[class*='send-btn'],
-form button:last-of-type {
-	box-shadow:
-		0 0 10px rgba(0, 216, 255, 0.55),
-		0 0 22px rgba(0, 216, 255, 0.25) !important;
-	border: 1px solid rgba(0, 216, 255, 0.45) !important;
-	transition:
-		box-shadow 0.2s ease,
-		border-color 0.2s ease !important;
-}
-
-button[type='submit']:hover,
-button[aria-label='Send message']:hover,
-button[aria-label*='Send']:hover,
-.send-button:hover,
-#send-message-button:hover {
-	box-shadow:
-		0 0 16px rgba(0, 216, 255, 0.85),
-		0 0 36px rgba(0, 216, 255, 0.4) !important;
-	border-color: rgba(0, 216, 255, 0.75) !important;
-}
-
-/* ----------------------------------------------------------
-   5. Model Picker — HaMm3r Accent Colors
-   ---------------------------------------------------------- */
-/* Dropdown trigger / selector button */
-select,
-.model-selector,
-[class*='model-picker'],
-[class*='model-selector'],
-[id*='model-select'],
-button[aria-haspopup='listbox'],
-button[aria-haspopup='menu'] {
-	background-color: #131b2e !important;
-	border: 1px solid rgba(129, 140, 248, 0.35) !important;
-	color: #818cf8 !important;
-	border-radius: 0.5rem !important;
-	transition:
-		border-color 0.2s ease,
-		box-shadow 0.2s ease !important;
-}
-
-select:hover,
-.model-selector:hover,
-[class*='model-picker']:hover,
-[class*='model-selector']:hover,
-button[aria-haspopup='listbox']:hover,
-button[aria-haspopup='menu']:hover {
-	border-color: #818cf8 !important;
-	box-shadow: 0 0 8px rgba(129, 140, 248, 0.3) !important;
-}
-
-/* Dropdown list items */
-[role='option'],
-[role='listbox'] li,
-[class*='dropdown-item'],
-[class*='model-option'] {
-	background-color: #0d1424 !important;
-	color: #c7d2fe !important;
-}
-
-[role='option']:hover,
-[role='listbox'] li:hover,
-[class*='dropdown-item']:hover,
-[class*='model-option']:hover,
-[role='option'][aria-selected='true'] {
-	background-color: #1e2a45 !important;
-	color: #818cf8 !important;
-}
-
-/* ----------------------------------------------------------
-   6. Watermark / Badge — 'HaMm3r's Agent OS' Bottom-Left
-   ---------------------------------------------------------- */
-body::after {
-	content: "⚡ HaMm3r's Agent OS";
-	position: fixed;
-	bottom: 14px;
-	left: 16px;
-	z-index: 9999;
-	font-family: 'Inter', sans-serif;
-	font-size: 0.68rem;
-	font-weight: 600;
-	letter-spacing: 0.06em;
-	padding: 4px 10px;
-	border-radius: 999px;
-	background: rgba(9, 13, 22, 0.82);
-	border: 1px solid rgba(129, 140, 248, 0.35);
-	color: rgba(129, 140, 248, 0.75);
-	backdrop-filter: blur(6px);
-	-webkit-backdrop-filter: blur(6px);
-	pointer-events: none;
-	user-select: none;
-	text-shadow: 0 0 8px rgba(0, 216, 255, 0.35);
-	box-shadow: 0 0 12px rgba(129, 140, 248, 0.12);
-}
+/* Selection */
+::selection { background: rgba(0,216,255,0.2); color: #E2E8F0; }

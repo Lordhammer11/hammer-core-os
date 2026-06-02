@@ -172,6 +172,9 @@ async def get_session_user(
     user=Depends(get_current_user),
     db: AsyncSession = Depends(get_async_session),
 ):
+    from open_webui.env import WEBUI_AUTH
+    import time, datetime
+
     token = None
     auth_header = request.headers.get('Authorization')
     if auth_header:
@@ -182,6 +185,18 @@ async def get_session_user(
         token = request.cookies.get('token')
     if token is None and getattr(request.state, 'token', None):
         token = request.state.token.credentials
+
+    # HaMm3r: when auth is disabled, generate a session token for the admin user
+    if not WEBUI_AUTH and token is None:
+        token = create_token(data={'id': user.id})
+        response.set_cookie(
+            key='token',
+            value=token,
+            httponly=True,
+            samesite=WEBUI_AUTH_COOKIE_SAME_SITE,
+            secure=WEBUI_AUTH_COOKIE_SECURE,
+        )
+
     data = decode_token(token) if token else None
 
     expires_at = None
@@ -630,9 +645,10 @@ async def signin(
                 lambda pw: verify_password(admin_password, pw),
                 db=db,
             )
+        elif await Users.has_users(db=db):
+            # HaMm3r: auth disabled — log in as the first admin user instead
+            user = await Users.get_first_user(db=db)
         else:
-            if await Users.has_users(db=db):
-                raise HTTPException(400, detail=ERROR_MESSAGES.EXISTING_USERS)
 
             await signup_handler(
                 request,
@@ -750,9 +766,12 @@ async def signup(
     has_users = await Users.has_users(db=db)
 
     if WEBUI_AUTH:
-        if not request.app.state.config.ENABLE_SIGNUP or not request.app.state.config.ENABLE_LOGIN_FORM:
-            if has_users or not ENABLE_INITIAL_ADMIN_SIGNUP:
+        if has_users:
+            if not request.app.state.config.ENABLE_SIGNUP or not request.app.state.config.ENABLE_LOGIN_FORM:
                 raise HTTPException(status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
+        # Don't gate the first admin on ENABLE_SIGNUP: it auto-disables and can persist stale across a DB reset.
+        elif not request.app.state.config.ENABLE_LOGIN_FORM and not ENABLE_INITIAL_ADMIN_SIGNUP:
+            raise HTTPException(status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
     else:
         if has_users:
             raise HTTPException(status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)

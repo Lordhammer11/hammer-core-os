@@ -1,0 +1,294 @@
+/* ============================================================
+   HaMm3r's Agent OS — Full Design System v2
+   Glassmorphism · Glow Effects · Mjolnir Sidebar Logo
+   ============================================================ */
+
+/* ── FONTS ───────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/Inter-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* ── OVERRIDE OPEN WEBUI'S TAILWIND CSS VARIABLES ────────── */
+html.dark {
+  /* Backgrounds — deep navy from Utility Tool */
+  --color-gray-950: #060A12 !important;
+  --color-gray-900: #090D16 !important;
+  --color-gray-850: #0D1526 !important;
+  --color-gray-800: #131B2E !important;
+  --color-gray-700: #1E2A45 !important;
+  --color-gray-600: #2A3A5C !important;
+  --color-gray-500: #4A5A7C !important;
+  --color-gray-400: #6b6b8a !important;
+  --color-gray-300: #9BA3C0 !important;
+  --color-gray-200: #C7D2FE !important;
+  --color-gray-100: #e8e8f0 !important;
+  --color-gray-50:  #F0F0FF !important;
+
+  /* Accent — indigo/purple */
+  --color-blue-500: #818CF8 !important;
+  --color-blue-600: #6366F1 !important;
+  --color-blue-400: #A5B4FC !important;
+  --color-purple-500: #A855F7 !important;
+
+  /* HaMm3r design tokens */
+  --hammer-bg:       #090D16;
+  --hammer-surface:  #131B2E;
+  --hammer-surface2: #0D1526;
+  --hammer-border:   rgba(129,140,248,0.12);
+  --hammer-text:     #e8e8f0;
+  --hammer-muted:    #6b6b8a;
+  --hammer-accent:   #818CF8;
+  --hammer-accent2:  #A855F7;
+  --hammer-cyan:     #00D8FF;
+  --hammer-glow:     rgba(129,140,248,0.25);
+  --hammer-success:  #22c55e;
+}
+
+/* ── GLOBAL ──────────────────────────────────────────────── */
+html { color-scheme: dark !important; }
+
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif !important;
+  background: radial-gradient(ellipse at 20% 0%, rgba(99,102,241,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 100%, rgba(168,85,247,0.06) 0%, transparent 60%),
+              #090D16 !important;
+  background-attachment: fixed !important;
+}
+
+/* ── SCROLLBARS ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #090D16; }
+::-webkit-scrollbar-thumb {
+  background: rgba(129,140,248,0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: #818CF8; }
+
+/* ── SELECTION ───────────────────────────────────────────── */
+::selection {
+  background: rgba(129,140,248,0.3);
+  color: #e8e8f0;
+}
+
+/* ── LINKS ───────────────────────────────────────────────── */
+a { color: #818CF8 !important; }
+a:hover { color: #A855F7 !important; }
+
+/* ── CODE ────────────────────────────────────────────────── */
+code, pre {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+}
+
+/* ── GLASSMORPHISM CARDS ─────────────────────────────────── */
+/* Chat bubbles, panels, modals, dropdowns */
+.rounded-xl,
+.rounded-2xl,
+.rounded-lg,
+[class*="message"],
+[class*="chat-bubble"],
+[class*="modal"],
+[class*="dropdown"],
+[class*="popover"],
+[role="dialog"],
+[role="menu"] {
+  background: rgba(19,27,46,0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(129,140,248,0.12) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4),
+              inset 0 1px 0 rgba(255,255,255,0.04) !important;
+}
+
+/* Assistant message bubbles — subtle indigo tint */
+[data-role="assistant"] .rounded-xl,
+[data-message-role="assistant"],
+.assistant-message {
+  background: rgba(99,102,241,0.08) !important;
+  border-color: rgba(129,140,248,0.18) !important;
+  box-shadow: 0 0 20px rgba(129,140,248,0.08),
+              0 4px 24px rgba(0,0,0,0.35),
+              inset 0 1px 0 rgba(255,255,255,0.04) !important;
+}
+
+/* User message bubbles */
+[data-role="user"] .rounded-xl,
+[data-message-role="user"],
+.user-message {
+  background: rgba(19,27,46,0.85) !important;
+  border-color: rgba(129,140,248,0.10) !important;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+#sidebar,
+nav[aria-label="Sidebar"],
+.sidebar,
+[class*="sidebar"] {
+  background: rgba(6,10,18,0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-right: 1px solid rgba(129,140,248,0.15) !important;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.5) !important;
+}
+
+/* ── MJOLNIR LOGO — SIDEBAR TOP ──────────────────────────── */
+/* Inject Mjolnir image above the sidebar content */
+#sidebar::before,
+nav[aria-label="Sidebar"]::before,
+[class*="sidebar"]::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 16px auto 8px;
+  background-image: url('/static/mjolnir.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 8px rgba(129,140,248,0.6))
+          drop-shadow(0 0 20px rgba(0,216,255,0.3));
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* ── TOPBAR / NAVBAR ─────────────────────────────────────── */
+header,
+nav[aria-label*="nav"],
+[class*="topbar"],
+[class*="navbar"],
+[class*="header"] {
+  background: rgba(9,13,22,0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(129,140,248,0.12) !important;
+}
+
+/* ── CHAT INPUT AREA ─────────────────────────────────────── */
+[class*="chat-input"],
+[class*="message-input"],
+form > div,
+.chat-form {
+  background: rgba(13,21,38,0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(129,140,248,0.18) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 0 20px rgba(129,140,248,0.08),
+              inset 0 1px 0 rgba(255,255,255,0.04) !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+[class*="chat-input"]:focus-within,
+form > div:focus-within {
+  border-color: rgba(129,140,248,0.45) !important;
+  box-shadow: 0 0 0 3px rgba(129,140,248,0.12),
+              0 0 24px rgba(129,140,248,0.15) !important;
+}
+
+/* ── INPUT FOCUS GLOW ────────────────────────────────────── */
+textarea:focus,
+input:focus {
+  border-color: #818CF8 !important;
+  box-shadow: 0 0 0 3px rgba(129,140,248,0.2) !important;
+  outline: none !important;
+}
+
+/* ── SEND BUTTON — CYAN GLOW ─────────────────────────────── */
+button[aria-label="Send message"],
+button[aria-label*="Send"],
+button[type="submit"] {
+  background: linear-gradient(135deg, rgba(0,216,255,0.15), rgba(99,102,241,0.2)) !important;
+  box-shadow: 0 0 10px rgba(0,216,255,0.55),
+              0 0 22px rgba(0,216,255,0.25) !important;
+  border: 1px solid rgba(0,216,255,0.45) !important;
+  border-radius: 12px !important;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.1s !important;
+}
+
+button[aria-label="Send message"]:hover {
+  box-shadow: 0 0 18px rgba(0,216,255,0.9),
+              0 0 40px rgba(0,216,255,0.4) !important;
+  transform: scale(1.05) !important;
+}
+
+/* ── MODEL SELECTOR ──────────────────────────────────────── */
+button[aria-haspopup="listbox"],
+button[aria-haspopup="menu"] {
+  background: rgba(19,27,46,0.6) !important;
+  border: 1px solid rgba(129,140,248,0.25) !important;
+  border-radius: 10px !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+button[aria-haspopup="listbox"]:hover,
+button[aria-haspopup="menu"]:hover {
+  border-color: #818CF8 !important;
+  box-shadow: 0 0 12px rgba(129,140,248,0.3) !important;
+}
+
+/* ── BUTTONS — GENERAL ───────────────────────────────────── */
+button:not([type="submit"]):not([aria-label*="Send"]):hover {
+  background: rgba(129,140,248,0.1) !important;
+  transition: background 0.15s !important;
+}
+
+/* ── PRIMARY ACTION BUTTONS ──────────────────────────────── */
+button[class*="primary"],
+button[class*="btn-primary"],
+.btn-primary {
+  background: linear-gradient(135deg, #6366F1, #A855F7) !important;
+  border: none !important;
+  box-shadow: 0 0 14px rgba(129,140,248,0.4) !important;
+  transition: box-shadow 0.2s, transform 0.1s !important;
+}
+
+button[class*="primary"]:hover {
+  box-shadow: 0 0 22px rgba(129,140,248,0.65) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── CHAT HISTORY ITEMS ──────────────────────────────────── */
+[class*="chat-item"]:hover,
+[class*="history-item"]:hover,
+li[class*="hover"] {
+  background: rgba(129,140,248,0.08) !important;
+  border-radius: 10px !important;
+}
+
+/* ── DIVIDERS ────────────────────────────────────────────── */
+hr, [class*="divider"] {
+  border-color: rgba(129,140,248,0.12) !important;
+}
+
+/* ── GLOW PULSE ANIMATION ────────────────────────────────── */
+@keyframes hammerGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(129,140,248,0.2); }
+  50%       { box-shadow: 0 0 22px rgba(129,140,248,0.45); }
+}
+
+/* ── WATERMARK BADGE ─────────────────────────────────────── */
+body::after {
+  content: "⚡ HaMm3r's Agent OS";
+  position: fixed;
+  bottom: 14px;
+  left: 16px;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(9,13,22,0.88);
+  border: 1px solid rgba(129,140,248,0.35);
+  color: rgba(129,140,248,0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 0 8px rgba(0,216,255,0.4);
+  box-shadow: 0 0 14px rgba(129,140,248,0.15);
+  animation: hammerGlow 3s ease-in-out infinite;
+}

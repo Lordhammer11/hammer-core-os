@@ -304,6 +304,15 @@ async def get_current_user(
     # This ensures connections are released immediately after auth queries,
     # not held for the entire request duration (e.g., during 30+ second LLM calls).
 ):
+    from open_webui.env import WEBUI_AUTH
+    from open_webui.models.users import Users
+
+    # HaMm3r: if auth is disabled, auto-login as admin
+    if not WEBUI_AUTH:
+        admin = await Users.get_first_user()
+        if admin:
+            return admin
+
     token = None
 
     if auth_token is not None:
@@ -432,7 +441,7 @@ async def get_current_user_by_api_key(request, api_key: str):
         allowed_paths = [
             path.strip() for path in str(request.app.state.config.API_KEYS_ALLOWED_ENDPOINTS).split(',') if path.strip()
         ]
-        request_path = request.url.path
+        request_path = request.scope["path"]  # Use raw ASGI path — not spoofable via Host header (CVE-2026-48710)
         is_allowed = any(request_path == allowed or request_path.startswith(allowed + '/') for allowed in allowed_paths)
         if not is_allowed:
             raise HTTPException(

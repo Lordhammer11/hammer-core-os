@@ -16,8 +16,6 @@ import markdown
 from bs4 import BeautifulSoup
 from cryptography.hazmat.primitives import serialization
 
-from open_webui.constants import ERROR_MESSAGES
-
 ####################################
 # Load .env file
 ####################################
@@ -917,6 +915,306 @@ else:
         RAG_EMBEDDING_TIMEOUT = int(RAG_EMBEDDING_TIMEOUT)
     except Exception:
         RAG_EMBEDDING_TIMEOUT = None
+
+
+####################################
+# Auth
+####################################
+
+WEBUI_AUTH = os.getenv('WEBUI_AUTH', 'True').lower() == 'true'
+
+ENABLE_INITIAL_ADMIN_SIGNUP = os.getenv('ENABLE_INITIAL_ADMIN_SIGNUP', 'False').lower() == 'true'
+ENABLE_SIGNUP_PASSWORD_CONFIRMATION = os.getenv('ENABLE_SIGNUP_PASSWORD_CONFIRMATION', 'False').lower() == 'true'
+
+####################################
+# Secret key & cookies
+####################################
+
+# WEBUI_JWT_SECRET_KEY is deprecated; use WEBUI_SECRET_KEY instead.
+# No hardcoded fallback by design: the supported start scripts set/auto-generate it; unset is rejected below.
+WEBUI_SECRET_KEY = os.getenv(
+    'WEBUI_SECRET_KEY',
+    os.getenv('WEBUI_JWT_SECRET_KEY', ''),
+)
+
+WEBUI_SESSION_COOKIE_SAME_SITE = os.getenv('WEBUI_SESSION_COOKIE_SAME_SITE', 'lax')
+WEBUI_SESSION_COOKIE_SECURE = os.getenv('WEBUI_SESSION_COOKIE_SECURE', 'false').lower() == 'true'
+WEBUI_AUTH_COOKIE_SAME_SITE = os.getenv('WEBUI_AUTH_COOKIE_SAME_SITE', WEBUI_SESSION_COOKIE_SAME_SITE)
+WEBUI_AUTH_COOKIE_SECURE = (
+    os.getenv(
+        'WEBUI_AUTH_COOKIE_SECURE',
+        os.getenv('WEBUI_SESSION_COOKIE_SECURE', 'false'),
+    ).lower()
+    == 'true'
+)
+
+if WEBUI_AUTH and WEBUI_SECRET_KEY == '':
+    raise SystemExit(
+        'WEBUI_SECRET_KEY is not set. It is a hard requirement when authentication is enabled.\n'
+        'The supported start methods set or auto-generate it for you: use start.sh (Linux/macOS), '
+        'start_windows.bat (Windows), or `open-webui serve`.\n'
+        'If you start the backend another way (e.g. invoking uvicorn directly, which is unsupported), '
+        'you must set WEBUI_SECRET_KEY yourself to a long random value.\n'
+        'See https://docs.openwebui.com/reference/env-configuration#webui_secret_key'
+    )
+
+ENABLE_COMPRESSION_MIDDLEWARE = os.getenv('ENABLE_COMPRESSION_MIDDLEWARE', 'True').lower() == 'true'
+
+####################################
+# Admin Account Runtime Creation
+####################################
+
+# Optional env vars for creating an admin account on startup
+# Useful for headless/automated deployments
+WEBUI_ADMIN_EMAIL = os.getenv('WEBUI_ADMIN_EMAIL', '')
+WEBUI_ADMIN_PASSWORD = os.getenv('WEBUI_ADMIN_PASSWORD', '')
+WEBUI_ADMIN_NAME = os.getenv('WEBUI_ADMIN_NAME', 'Admin')
+
+WEBUI_AUTH_TRUSTED_EMAIL_HEADER = os.getenv('WEBUI_AUTH_TRUSTED_EMAIL_HEADER', None)
+WEBUI_AUTH_TRUSTED_NAME_HEADER = os.getenv('WEBUI_AUTH_TRUSTED_NAME_HEADER', None)
+WEBUI_AUTH_TRUSTED_GROUPS_HEADER = os.getenv('WEBUI_AUTH_TRUSTED_GROUPS_HEADER', None)
+WEBUI_AUTH_TRUSTED_ROLE_HEADER = os.getenv('WEBUI_AUTH_TRUSTED_ROLE_HEADER', None)
+
+# Custom header name for API key authentication.  Defaults to 'x-api-key'.
+# Useful when Open WebUI sits behind a reverse proxy / API gateway that
+# already uses the Authorization header for its own authentication — set
+# this to a unique header (e.g. 'X-OpenWebUI-Key') so the middleware
+# checks the custom header instead and avoids the 401 short-circuit.
+CUSTOM_API_KEY_HEADER = os.getenv('CUSTOM_API_KEY_HEADER', 'x-api-key')
+
+ENABLE_PASSWORD_VALIDATION = os.getenv('ENABLE_PASSWORD_VALIDATION', 'False').lower() == 'true'
+PASSWORD_VALIDATION_REGEX_PATTERN = os.getenv(
+    'PASSWORD_VALIDATION_REGEX_PATTERN',
+    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$',
+)
+
+
+try:
+    PASSWORD_VALIDATION_REGEX_PATTERN = rf'{PASSWORD_VALIDATION_REGEX_PATTERN}'
+    PASSWORD_VALIDATION_REGEX_PATTERN = re.compile(PASSWORD_VALIDATION_REGEX_PATTERN)
+except Exception as e:
+    log.error(f'Invalid PASSWORD_VALIDATION_REGEX_PATTERN: {e}')
+    PASSWORD_VALIDATION_REGEX_PATTERN = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$')
+
+PASSWORD_VALIDATION_HINT = os.getenv('PASSWORD_VALIDATION_HINT', '')
+
+
+BYPASS_MODEL_ACCESS_CONTROL = os.getenv('BYPASS_MODEL_ACCESS_CONTROL', 'False').lower() == 'true'
+
+# When enabled, skips pydub-based preprocessing (format conversion, compression,
+# and chunked splitting) before sending files to processing engines. Useful when
+# the upstream provider handles these steps or when ffmpeg is unavailable.
+BYPASS_PYDUB_PREPROCESSING = os.getenv('BYPASS_PYDUB_PREPROCESSING', 'False').lower() == 'true'
+
+# When disabled (default), the OpenAI catch-all proxy endpoint (/{path:path})
+# is blocked. Enable only if you need direct passthrough to upstream OpenAI-
+# compatible APIs for endpoints not natively handled by Open WebUI.
+ENABLE_OPENAI_API_PASSTHROUGH = os.getenv('ENABLE_OPENAI_API_PASSTHROUGH', 'False').lower() == 'true'
+
+WEBUI_AUTH_SIGNOUT_REDIRECT_URL = os.getenv('WEBUI_AUTH_SIGNOUT_REDIRECT_URL', None)
+
+####################################
+# OAUTH Configuration
+####################################
+ENABLE_OAUTH_EMAIL_FALLBACK = os.getenv('ENABLE_OAUTH_EMAIL_FALLBACK', 'False').lower() == 'true'
+
+ENABLE_OAUTH_ID_TOKEN_COOKIE = os.getenv('ENABLE_OAUTH_ID_TOKEN_COOKIE', 'True').lower() == 'true'
+
+OAUTH_CLIENT_INFO_ENCRYPTION_KEY = os.getenv('OAUTH_CLIENT_INFO_ENCRYPTION_KEY', WEBUI_SECRET_KEY)
+
+OAUTH_SESSION_TOKEN_ENCRYPTION_KEY = os.getenv('OAUTH_SESSION_TOKEN_ENCRYPTION_KEY', WEBUI_SECRET_KEY)
+
+# Maximum number of concurrent OAuth sessions per user per provider
+# This prevents unbounded session growth while allowing multi-device usage
+OAUTH_MAX_SESSIONS_PER_USER = int(os.getenv('OAUTH_MAX_SESSIONS_PER_USER', '10'))
+
+# Token Exchange Configuration
+# Allows external apps to exchange OAuth tokens for OpenWebUI tokens
+ENABLE_OAUTH_TOKEN_EXCHANGE = os.getenv('ENABLE_OAUTH_TOKEN_EXCHANGE', 'False').lower() == 'true'
+
+# Back-Channel Logout Configuration
+# When enabled, exposes POST /oauth/backchannel-logout for IdP-initiated logout
+# per OpenID Connect Back-Channel Logout 1.0 spec.
+# Requires Redis for JWT revocation.
+ENABLE_OAUTH_BACKCHANNEL_LOGOUT = os.getenv('ENABLE_OAUTH_BACKCHANNEL_LOGOUT', 'False').lower() == 'true'
+
+####################################
+# SCIM Configuration
+####################################
+
+ENABLE_SCIM = os.getenv('ENABLE_SCIM', os.getenv('SCIM_ENABLED', 'False')).lower() == 'true'
+SCIM_TOKEN = os.getenv('SCIM_TOKEN', '')
+SCIM_AUTH_PROVIDER = os.getenv('SCIM_AUTH_PROVIDER', '')
+
+if ENABLE_SCIM and not SCIM_AUTH_PROVIDER:
+    log.warning(
+        'SCIM is enabled but SCIM_AUTH_PROVIDER is not set. '
+        "Set SCIM_AUTH_PROVIDER to the OAuth provider name (e.g. 'microsoft', 'oidc') "
+        'to enable externalId storage.'
+    )
+
+####################################
+# LICENSE_KEY
+####################################
+
+LICENSE_KEY = os.getenv('LICENSE_KEY', '')
+
+LICENSE_BLOB = None
+LICENSE_BLOB_PATH = os.getenv('LICENSE_BLOB_PATH', DATA_DIR / 'l.data')
+if LICENSE_BLOB_PATH and os.path.exists(LICENSE_BLOB_PATH):
+    with open(LICENSE_BLOB_PATH, 'rb') as f:
+        LICENSE_BLOB = f.read()
+
+LICENSE_PUBLIC_KEY = os.getenv('LICENSE_PUBLIC_KEY', '')
+
+pk = None
+if LICENSE_PUBLIC_KEY:
+    pk = serialization.load_pem_public_key(
+        f"""
+-----BEGIN PUBLIC KEY-----
+{LICENSE_PUBLIC_KEY}
+-----END PUBLIC KEY-----
+""".encode()
+    )
+
+
+####################################
+# WEBUI Identity
+####################################
+
+WEBUI_NAME = os.getenv('WEBUI_NAME', 'Open WebUI')
+if WEBUI_NAME != 'Open WebUI':
+    WEBUI_NAME += ' (Open WebUI)'
+
+WEBUI_FAVICON_URL = 'https://openwebui.com/favicon.png'
+WEBUI_BUILD_HASH = os.getenv('WEBUI_BUILD_HASH', 'dev-build')
+TRUSTED_SIGNATURE_KEY = os.getenv('TRUSTED_SIGNATURE_KEY', '')
+
+####################################
+# Feature flags
+####################################
+
+SAFE_MODE = os.getenv('SAFE_MODE', 'False').lower() == 'true'
+ENABLE_EASTER_EGGS = os.getenv('ENABLE_EASTER_EGGS', 'True').lower() == 'true'
+ENABLE_STAR_SESSIONS_MIDDLEWARE = os.getenv('ENABLE_STAR_SESSIONS_MIDDLEWARE', 'False').lower() == 'true'
+ENABLE_KB_EXEC = os.getenv('ENABLE_KB_EXEC', 'False').lower() == 'true'
+
+ENABLE_PROFILE_IMAGE_URL_FORWARDING = os.getenv('ENABLE_PROFILE_IMAGE_URL_FORWARDING', 'True').lower() == 'true'
+PROFILE_IMAGE_ALLOWED_MIME_TYPES = frozenset(
+    t.strip()
+    for t in os.getenv(
+        'PROFILE_IMAGE_ALLOWED_MIME_TYPES',
+        'image/png,image/jpeg,image/gif,image/webp',
+    ).split(',')
+    if t.strip()
+)
+
+# Max stored length (bytes) of a data:image profile URI; bounds Postgres/Redis
+# bloat from inline avatars and model icons. Unset (default) disables the cap.
+_profile_image_max_data_uri_size = os.getenv('PROFILE_IMAGE_MAX_DATA_URI_SIZE', '').strip()
+PROFILE_IMAGE_MAX_DATA_URI_SIZE = (
+    int(_profile_image_max_data_uri_size) if _profile_image_max_data_uri_size else None
+)
+
+####################################
+# Forward Headers
+####################################
+
+ENABLE_FORWARD_USER_INFO_HEADERS = os.getenv('ENABLE_FORWARD_USER_INFO_HEADERS', 'False').lower() == 'true'
+
+FORWARD_USER_INFO_HEADER_USER_NAME = os.getenv('FORWARD_USER_INFO_HEADER_USER_NAME', 'X-OpenWebUI-User-Name')
+FORWARD_USER_INFO_HEADER_USER_ID = os.getenv('FORWARD_USER_INFO_HEADER_USER_ID', 'X-OpenWebUI-User-Id')
+FORWARD_USER_INFO_HEADER_USER_EMAIL = os.getenv('FORWARD_USER_INFO_HEADER_USER_EMAIL', 'X-OpenWebUI-User-Email')
+FORWARD_USER_INFO_HEADER_USER_ROLE = os.getenv('FORWARD_USER_INFO_HEADER_USER_ROLE', 'X-OpenWebUI-User-Role')
+FORWARD_SESSION_INFO_HEADER_MESSAGE_ID = os.getenv('FORWARD_SESSION_INFO_HEADER_MESSAGE_ID', 'X-OpenWebUI-Message-Id')
+FORWARD_SESSION_INFO_HEADER_CHAT_ID = os.getenv('FORWARD_SESSION_INFO_HEADER_CHAT_ID', 'X-OpenWebUI-Chat-Id')
+
+####################################
+# Progressive Web App
+####################################
+
+EXTERNAL_PWA_MANIFEST_URL = os.getenv('EXTERNAL_PWA_MANIFEST_URL', None)
+
+####################################
+# GROUP DEFAULTS
+####################################
+
+# Controls the default "Who can share to this group" setting for new groups.
+# Env var values: "true" (anyone), "false" (no one), "members" (only group members).
+_default_group_share = os.getenv('DEFAULT_GROUP_SHARE_PERMISSION', 'members').strip().lower()
+DEFAULT_GROUP_SHARE_PERMISSION = 'members' if _default_group_share == 'members' else _default_group_share == 'true'
+
+####################################
+# MODELS
+####################################
+
+ENABLE_CUSTOM_MODEL_FALLBACK = os.getenv('ENABLE_CUSTOM_MODEL_FALLBACK', 'False').lower() == 'true'
+
+MODELS_CACHE_TTL = os.getenv('MODELS_CACHE_TTL', '1')
+if MODELS_CACHE_TTL == '':
+    MODELS_CACHE_TTL = None
+else:
+    try:
+        MODELS_CACHE_TTL = int(MODELS_CACHE_TTL)
+    except Exception:
+        MODELS_CACHE_TTL = 1
+
+
+####################################
+# CHAT
+####################################
+
+ENABLE_CHAT_RESPONSE_BASE64_IMAGE_URL_CONVERSION = (
+    os.getenv('ENABLE_CHAT_RESPONSE_BASE64_IMAGE_URL_CONVERSION', 'False').lower() == 'true'
+)
+
+# When enabled, uses a hardcoded extension-to-MIME dictionary as a last-resort
+# fallback when both mimetypes.guess_type() and file.meta.content_type fail to
+# determine the content type. This can help on minimal container images (e.g.
+# wolfi-base) that lack /etc/mime.types AND have legacy files without stored
+# content_type metadata.
+ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK = (
+    os.getenv('ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK', 'False').lower() == 'true'
+)
+
+CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = os.getenv('CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE', '1')
+
+if CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE == '':
+    CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = 1
+else:
+    try:
+        CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = int(CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE)
+    except Exception:
+        CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = 1
+
+
+CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES = os.getenv('CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES', '30')
+
+if CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES == '':
+    CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES = 30
+else:
+    try:
+        CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES = int(CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES)
+    except Exception:
+        CHAT_RESPONSE_MAX_TOOL_CALL_RETRIES = 30
+
+
+# WARNING: Experimental. Only enable if your upstream Responses API endpoint
+# supports stateful sessions (i.e. server-side response storage with
+# previous_response_id anchoring). Most proxies and third-party endpoints
+# are stateless and will break if this is enabled.
+ENABLE_RESPONSES_API_STATEFUL = os.getenv('ENABLE_RESPONSES_API_STATEFUL', 'False').lower() == 'true'
+
+
+CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = os.getenv('CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE', '')
+
+if CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE == '':
+    CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = None
+else:
+    try:
+        CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = int(CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE)
+    except Exception:
+        CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = None
 
 
 ####################################

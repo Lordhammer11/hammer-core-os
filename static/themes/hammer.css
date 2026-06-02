@@ -1,0 +1,420 @@
+/*
+ * ╔══════════════════════════════════════════════════════╗
+ * ║      HaMm3r's Agent OS — SaaS Native Dark Theme     ║
+ * ║      Midnight Indigo-Gray × Electric Cyan × Lavender ║
+ * ╚══════════════════════════════════════════════════════╝
+ *
+ * Tailwind v4 uses oklch() — hex values in CSS vars won't work.
+ * These oklch values are calibrated to match the original palette.
+ */
+
+/* ═══════════════════════════════════════════
+   GLOBAL COLOR SYSTEM OVERRIDE
+   Remaps Open WebUI's gray scale to
+   Midnight Indigo-Gray palette
+═══════════════════════════════════════════ */
+.dark {
+  --color-gray-50:  oklch(90% 0.006 265);   /* #E2E8F0 — body text */
+  --color-gray-100: oklch(81% 0.009 265);   /* #CBD5E1 */
+  --color-gray-200: oklch(64% 0.012 265);   /* #94A3B8 */
+  --color-gray-300: oklch(48% 0.014 265);   /* #64748B */
+  --color-gray-400: oklch(37% 0.016 265);   /* #475569 */
+  --color-gray-500: oklch(26% 0.020 265);   /* #334155 — border range */
+  --color-gray-600: oklch(18% 0.025 265);   /* #1E293B — elevated surface */
+  --color-gray-700: oklch(15% 0.028 265);   /* #182035 — card surface */
+  --color-gray-800: oklch(12% 0.030 265);   /* #131B2E — deep cards */
+  --color-gray-850: oklch(9.5% 0.026 265);  /* #0F1525 — between */
+  --color-gray-900: oklch(7.5% 0.024 265);  /* #0D1120 — near canvas */
+  --color-gray-950: oklch(5.5% 0.022 265);  /* #090D16 — canvas */
+}
+
+/* ═══════════════════════════════════════════
+   ROOT CSS TOKENS
+═══════════════════════════════════════════ */
+:root {
+  /* Font */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* HaMm3r accent colors */
+  --hammer-cyan:        #00D8FF;
+  --hammer-cyan-dim:    rgba(0, 216, 255, 0.15);
+  --hammer-cyan-glow:   rgba(0, 216, 255, 0.08);
+  --hammer-lavender:    #818CF8;
+  --hammer-purple:      #A855F7;
+  --hammer-purple-dim:  rgba(168, 85, 247, 0.15);
+  --hammer-coral:       #FF6B8A;
+
+  /* Frosted glass borders */
+  --hammer-border:      rgba(255, 255, 255, 0.06);
+  --hammer-border-cyan: rgba(0, 216, 255, 0.12);
+
+  /* Glow effects */
+  --hammer-glow-cyan:   0 0 20px rgba(0, 216, 255, 0.12), 0 0 40px rgba(0, 216, 255, 0.06);
+  --hammer-glow-purple: 0 0 20px rgba(168, 85, 247, 0.12), 0 0 40px rgba(168, 85, 247, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.dark body,
+.dark * {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════
+   APP CANVAS
+═══════════════════════════════════════════ */
+.dark body,
+.dark #app,
+.dark .app {
+  background-color: #090D16 !important;
+}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════ */
+.dark nav,
+.dark #sidebar,
+.dark [id*="sidebar"],
+.dark aside {
+  background-color: #0D1120 !important;
+  border-right: 1px solid rgba(0, 216, 255, 0.07) !important;
+}
+
+/* Sidebar top brand area */
+.dark nav > div:first-child,
+.dark aside > div:first-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Chat history hover */
+.dark .dark\:hover\:bg-gray-900:hover,
+.dark [class*="hover:bg-gray-9"]:hover {
+  background-color: #131B2E !important;
+  border-radius: 8px !important;
+}
+
+/* Active chat item */
+.dark .dark\:bg-gray-900,
+.dark .bg-gray-900 {
+  background-color: #131B2E !important;
+  border-left: 2px solid var(--hammer-cyan) !important;
+  border-radius: 8px !important;
+}
+
+/* ═══════════════════════════════════════════
+   TOP NAVBAR / HEADER
+═══════════════════════════════════════════ */
+.dark header,
+.dark #nav,
+.dark nav[aria-label] {
+  background-color: #090D16 !important;
+  border-bottom: 1px solid rgba(0, 216, 255, 0.07) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CHAT AREA
+═══════════════════════════════════════════ */
+.dark main,
+.dark #content,
+.dark .chat-container {
+  background-color: #090D16 !important;
+}
+
+/* ═══════════════════════════════════════════
+   MESSAGE BUBBLES
+═══════════════════════════════════════════ */
+.dark .dark\:bg-gray-800,
+.dark .bg-gray-800 {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(0, 216, 255, 0.08) !important;
+  border-radius: 14px !important;
+}
+
+/* Chat input area */
+.dark #chat-input,
+.dark textarea[placeholder],
+.dark [contenteditable] {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-top: 1px solid rgba(0, 216, 255, 0.1) !important;
+  border-radius: 14px !important;
+  color: #E2E8F0 !important;
+  caret-color: var(--hammer-cyan) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.dark textarea:focus,
+.dark [contenteditable]:focus {
+  border-color: rgba(0, 216, 255, 0.25) !important;
+  box-shadow: 0 0 0 2px rgba(0, 216, 255, 0.06) !important;
+  outline: none !important;
+}
+
+/* ═══════════════════════════════════════════
+   SEND BUTTON
+═══════════════════════════════════════════ */
+.dark button[type="submit"],
+.dark button[aria-label*="Send"],
+.dark .dark\:bg-white.dark\:text-black {
+  background: linear-gradient(135deg, #00D8FF, #818CF8) !important;
+  color: #090D16 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 12px rgba(0,216,255,0.3) !important;
+  transition: opacity 0.2s ease, transform 0.1s ease !important;
+}
+
+.dark button[type="submit"]:hover {
+  opacity: 0.92 !important;
+  transform: scale(1.03) !important;
+  box-shadow: 0 4px 20px rgba(0,216,255,0.5) !important;
+}
+
+/* ═══════════════════════════════════════════
+   MODEL SELECTOR
+═══════════════════════════════════════════ */
+.dark [class*="model-selector"],
+.dark select,
+.dark .dark\:bg-gray-850 {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 10px !important;
+  color: #E2E8F0 !important;
+}
+
+/* Dropdown menus */
+.dark [role="listbox"],
+.dark [role="menu"],
+.dark [role="dialog"],
+.dark .dark\:bg-gray-850,
+.dark .dark\:bg-gray-900.rounded-xl {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-top: 1px solid rgba(0, 216, 255, 0.1) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), var(--hammer-glow-cyan) !important;
+}
+
+.dark [role="option"]:hover,
+.dark [role="menuitem"]:hover {
+  background-color: rgba(0, 216, 255, 0.06) !important;
+  border-radius: 8px !important;
+}
+
+/* ═══════════════════════════════════════════
+   CARDS / PANELS / MODALS
+═══════════════════════════════════════════ */
+.dark .dark\:bg-gray-850,
+.dark [class*="card"],
+.dark [class*="panel"],
+.dark [role="dialog"] {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 16px !important;
+}
+
+/* Modal backdrop */
+.dark .dark\:bg-gray-900\/60,
+.dark [class*="backdrop"],
+.dark [class*="overlay"] {
+  background-color: rgba(9, 13, 22, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* ═══════════════════════════════════════════
+   SETTINGS PANELS
+═══════════════════════════════════════════ */
+.dark [class*="settings"],
+.dark [class*="Settings"] {
+  background-color: #131B2E !important;
+}
+
+.dark [class*="settings"] button:hover {
+  background-color: rgba(0, 216, 255, 0.06) !important;
+  border-radius: 8px !important;
+}
+
+.dark [class*="settings"] [aria-selected="true"],
+.dark [class*="settings"] [class*="active"] {
+  background-color: rgba(0, 216, 255, 0.1) !important;
+  border-left: 2px solid var(--hammer-cyan) !important;
+  color: var(--hammer-cyan) !important;
+  border-radius: 8px !important;
+}
+
+/* ═══════════════════════════════════════════
+   INPUTS & FORM ELEMENTS
+═══════════════════════════════════════════ */
+.dark input,
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="search"] {
+  background-color: #0D1120 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 8px !important;
+  color: #E2E8F0 !important;
+}
+
+.dark input:focus {
+  border-color: rgba(0, 216, 255, 0.3) !important;
+  box-shadow: 0 0 0 2px rgba(0, 216, 255, 0.06) !important;
+  outline: none !important;
+}
+
+.dark [role="switch"][aria-checked="true"] {
+  background-color: var(--hammer-cyan) !important;
+}
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
+.dark button.dark\:bg-gray-800,
+.dark button.dark\:hover\:bg-gray-700:hover {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 8px !important;
+  color: #E2E8F0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.dark button.dark\:hover\:bg-gray-700:hover {
+  border-color: rgba(0, 216, 255, 0.2) !important;
+  background-color: rgba(0, 216, 255, 0.06) !important;
+}
+
+.dark .dark\:bg-white {
+  background: linear-gradient(135deg, #00D8FF, #818CF8) !important;
+  color: #090D16 !important;
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBARS
+═══════════════════════════════════════════ */
+.dark ::-webkit-scrollbar { width: 4px; height: 4px; }
+.dark ::-webkit-scrollbar-track { background: transparent; }
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(0, 216, 255, 0.2);
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(0, 216, 255, 0.4); }
+
+/* ═══════════════════════════════════════════
+   CODE BLOCKS
+═══════════════════════════════════════════ */
+.dark pre,
+.dark code {
+  background-color: #0D1120 !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 10px !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace !important;
+}
+
+.dark pre > div:first-child {
+  background-color: #131B2E !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+/* ═══════════════════════════════════════════
+   BADGES / TAGS
+═══════════════════════════════════════════ */
+.dark [class*="badge"],
+.dark [class*="chip"],
+.dark [class*="tag"] {
+  background-color: rgba(129, 140, 248, 0.12) !important;
+  color: #818CF8 !important;
+  border: 1px solid rgba(129, 140, 248, 0.2) !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════
+   DIVIDERS
+═══════════════════════════════════════════ */
+.dark hr,
+.dark [class*="divider"],
+.dark .dark\:border-gray-800,
+.dark .dark\:border-gray-700 {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ═══════════════════════════════════════════
+   TEXT COLORS
+═══════════════════════════════════════════ */
+.dark .dark\:text-white,
+.dark .dark\:text-gray-100 { color: #E2E8F0 !important; }
+.dark .dark\:text-gray-200,
+.dark .dark\:text-gray-300 { color: #CBD5E1 !important; }
+.dark .dark\:text-gray-400  { color: #94A3B8 !important; }
+.dark .dark\:text-gray-500  { color: #64748B !important; }
+
+/* ═══════════════════════════════════════════
+   LINKS & FOCUS
+═══════════════════════════════════════════ */
+.dark a:not([class]) {
+  color: var(--hammer-cyan) !important;
+  text-decoration: none !important;
+}
+.dark a:not([class]):hover { color: #80EEFF !important; }
+
+.dark *:focus-visible {
+  outline: 2px solid rgba(0, 216, 255, 0.4) !important;
+  outline-offset: 2px !important;
+}
+
+/* ═══════════════════════════════════════════
+   SUGGESTION / PROMPT CARDS
+═══════════════════════════════════════════ */
+.dark [class*="suggestion"],
+.dark [class*="prompt-card"] {
+  background-color: #131B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-top: 1px solid rgba(0, 216, 255, 0.08) !important;
+  border-radius: 12px !important;
+  transition: all 0.15s ease !important;
+}
+.dark [class*="suggestion"]:hover,
+.dark [class*="prompt-card"]:hover {
+  border-color: rgba(0, 216, 255, 0.2) !important;
+  background-color: rgba(0, 216, 255, 0.04) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ═══════════════════════════════════════════
+   LOADING / SPINNER
+═══════════════════════════════════════════ */
+.dark [class*="spinner"],
+.dark [class*="loading"] {
+  border-color: rgba(0, 216, 255, 0.2) !important;
+  border-top-color: var(--hammer-cyan) !important;
+}
+
+/* ═══════════════════════════════════════════
+   TOP GLOW LINE (cinematic header accent)
+═══════════════════════════════════════════ */
+.dark body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0, 216, 255, 0.7) 25%,
+    rgba(129, 140, 248, 0.5) 60%,
+    rgba(168, 85, 247, 0.3) 80%,
+    transparent 100%
+  );
+  z-index: 9999;
+  pointer-events: none;
+}

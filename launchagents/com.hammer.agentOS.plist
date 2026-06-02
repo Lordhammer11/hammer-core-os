@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.hammer.agentOS</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/ronaldmajewski/open-webui/.venv/bin/python</string>
+        <string>-m</string>
+        <string>uvicorn</string>
+        <string>open_webui.main:app</string>
+        <string>--host</string>
+        <string>0.0.0.0</string>
+        <string>--port</string>
+        <string>3000</string>
+        <string>--timeout-keep-alive</string>
+        <string>75</string>
+        <string>--log-level</string>
+        <string>warning</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/ronaldmajewski/open-webui/backend</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Wait 10 seconds before restarting after a crash — prevents rapid restart loops -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>/Users/ronaldmajewski/open-webui/backend</string>
+        <key>DATA_DIR</key>
+        <string>/Users/ronaldmajewski/open-webui/data</string>
+        <key>OLLAMA_BASE_URL</key>
+        <string>http://127.0.0.1:11434</string>
+        <key>ENABLE_SIGNUP</key>
+        <string>false</string>
+        <key>WEBUI_AUTH</key>
+        <string>False</string>
+        <key>WEBUI_SECRET_KEY</key>
+        <string>hammer-agent-os-secret-2025</string>
+        <key>APP_NAME</key>
+        <string>HaMm3r's Agent OS</string>
+        <key>WEBUI_NAME</key>
+        <string>HaMm3r's Agent OS</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/ronaldmajewski/open-webui/logs/agentOS.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ronaldmajewski/open-webui/logs/agentOS.err.log</string>
+</dict>
+</plist>
