@@ -1,4 +1,6 @@
-#!/opt/homebrew/bin/python3
+#!/usr/bin/env python3
+# NOTE: Run with ~/open-webui/.venv/bin/python3 — NOT homebrew or system python
+# Chroma uses numpy C extensions compiled for Python 3.11 in the venv.
 """
 HaMm3r OS — Knowledge Base Indexer
 Indexes ~/HaMm3r-KB into Chroma vector DB for semantic search / RAG
