@@ -1,1 +1,1 @@
-../../../marketing-skill/skills/marketing-demand-acquisition/SKILL.md
+../../../marketing-skill/marketing-demand-acquisition/SKILL.md

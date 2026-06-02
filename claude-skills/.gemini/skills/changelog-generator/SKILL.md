@@ -1,1 +1,1 @@
-../../../engineering/skills/changelog-generator/SKILL.md
+../../../engineering/changelog-generator/SKILL.md

@@ -1,1 +1,1 @@
-../../../engineering/skills/secrets-vault-manager/SKILL.md
+../../../engineering/secrets-vault-manager/SKILL.md

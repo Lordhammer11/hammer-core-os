@@ -1,1 +1,1 @@
-../../../engineering-team/skills/tdd-guide/SKILL.md
+../../../engineering-team/tdd-guide/SKILL.md

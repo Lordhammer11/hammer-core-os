@@ -1,1 +1,1 @@
-../../../engineering/agenthub/skills/agenthub/SKILL.md
+../../../engineering/agenthub/SKILL.md

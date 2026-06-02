@@ -1,1 +1,1 @@
-../../../business-growth/skills/customer-success-manager/SKILL.md
+../../../business-growth/customer-success-manager/SKILL.md

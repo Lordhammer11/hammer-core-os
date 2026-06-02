@@ -1,1 +1,1 @@
-../../../engineering-team/skills/senior-data-scientist/SKILL.md
+../../../engineering-team/senior-data-scientist/SKILL.md

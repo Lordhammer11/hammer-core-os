@@ -1,1 +1,1 @@
-../../../project-management/skills/senior-pm/SKILL.md
+../../../project-management/senior-pm/SKILL.md

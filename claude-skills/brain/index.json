@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "owner": "lordhammer11",
+    "description": "Jarvis Brain \u2014 master index of all work, ideas, and creations",
+    "last_updated": "2026-06-02T10:16:24Z",
+    "repos": [
+      "lordhammer11/homebrew-tap",
+      "lordhammer11/claude-code-together",
+      "lordhammer11/claude-skills",
+      "lordhammer11/symmetrical-octo-goggles"
+    ]
+  },
+  "entries": [
+    {
+      "id": "gemma3-metal-macos",
+      "title": "Gemma 3 Homebrew Formula \u2014 Metal GPU + Chat UI",
+      "type": "homebrew-formula",
+      "repo": "lordhammer11/homebrew-tap",
+      "branch": "main",
+      "pr": 1,
+      "created": "2026-05-18",
+      "updated": "2026-05-29",
+      "status": "active",
+      "tags": [
+        "gemma3",
+        "metal",
+        "macos",
+        "ollama",
+        "ai",
+        "llm",
+        "homebrew",
+        "ui",
+        "gpu"
+      ],
+      "summary": "Homebrew formula that installs Google Gemma 3 locally on macOS with Metal GPU acceleration via Ollama. Embeds a Python interactive chat UI with model-size picker, coloured output, slash commands (/help /model /clear /save /quit), readline history, and conversation save-to-file.",
+      "files": [
+        "Formula/gemma3.rb"
+      ],
+      "notes": "HEAD-only formula. Install: brew install --HEAD lordhammer11/tap/gemma3. Metal is auto-enabled on Apple Silicon via Ollama."
+    },
+    {
+      "id": "apex-agent",
+      "title": "Apex Agent Homebrew Formula",
+      "type": "homebrew-formula",
+      "repo": "lordhammer11/homebrew-tap",
+      "branch": "main",
+      "pr": null,
+      "created": "2026-05-18",
+      "updated": "2026-05-18",
+      "status": "active",
+      "tags": [
+        "agent",
+        "homebrew"
+      ],
+      "summary": "Existing Homebrew formula for Apex Agent in the tap.",
+      "files": [
+        "Formula/apex-agent.rb"
+      ],
+      "notes": "Pre-existing formula \u2014 not modified in current sprint."
+    },
+    {
+      "id": "claude-skills-library",
+      "title": "Claude Skills Library (235+ skills)",
+      "type": "skills-library",
+      "repo": "lordhammer11/claude-skills",
+      "branch": "main",
+      "pr": null,
+      "created": "2026-05-18",
+      "updated": "2026-05-29",
+      "status": "active",
+      "tags": [
+        "skills",
+        "claude",
+        "agents",
+        "engineering",
+        "marketing",
+        "finance",
+        "product",
+        "c-level"
+      ],
+      "summary": "235+ production-ready skills across 9 domains: engineering, marketing, C-level advisory, product, project management, RA/QM, business growth, finance. Supports Claude Code, Cursor, VS Code/Copilot, Goose, Gemini CLI, Codex, OpenClaw.",
+      "files": [
+        "engineering-team/",
+        "marketing-skill/",
+        "c-level-advisor/",
+        "product-team/",
+        "project-management/",
+        "ra-qm-team/",
+        "business-growth/",
+        "finance/",
+        "engineering/"
+      ],
+      "notes": "See INSTALLATION.md for per-agent install commands."
+    },
+    {
+      "id": "jarvis-brain",
+      "title": "Jarvis Brain \u2014 persistent knowledge index",
+      "type": "meta-system",
+      "repo": "lordhammer11/claude-skills",
+      "branch": "dev",
+      "pr": null,
+      "created": "2026-05-18",
+      "updated": "2026-05-29",
+      "status": "active",
+      "tags": [
+        "brain",
+        "jarvis",
+        "meta",
+        "knowledge",
+        "index",
+        "automation"
+      ],
+      "summary": "Central knowledge brain tracking all work, ideas, and creations across every repo. Includes index.json, per-entry files, BRAIN.md human-readable dashboard, /brain Claude Code slash command, brain_update.py script, and GitHub Actions daily sync workflow.",
+      "files": [
+        "brain/index.json",
+        "brain/entries/",
+        "BRAIN.md",
+        ".claude/commands/brain.md",
+        "scripts/brain_update.py",
+        ".github/workflows/brain-sync.yml"
+      ],
+      "notes": "Query with /brain in Claude Code. Auto-syncs daily via GitHub Actions."
+    },
+    {
+      "id": "hammeros-ios-app",
+      "title": "HaMm3rOS iOS App",
+      "type": "ui",
+      "repo": "lordhammer11/claude-code-together",
+      "branch": "dev",
+      "pr": 2,
+      "created": "2026-05-29",
+      "updated": "2026-05-29",
+      "status": "active",
+      "tags": [
+        "ios",
+        "swift",
+        "swiftui",
+        "hammeros",
+        "gemma3",
+        "ollama",
+        "brain",
+        "mobile"
+      ],
+      "summary": "SwiftUI iOS app (iPhone + iPad, iOS 16+) serving as the HaMm3rOS mobile command centre. 5 tabs: Dashboard, Brain (searchable Jarvis Brain entries), Gemma (local AI chat via Ollama), Ideas, Settings. Full context persistence: chat history survives kill/relaunch, brain cached offline with 1h TTL, tab state via @SceneStorage.",
+      "files": [
+        "Sources/",
+        "Package.swift",
+        "README.md"
+      ],
+      "notes": "Open HaMm3rOS.swiftpm in Swift Playgrounds on iPhone or iPad \u2014 signs automatically with your Apple ID. Set Ollama host to your Mac's local IP in Settings for Gemma chat."
+    }
+  ],
+  "ideas": [
+    {
+      "id": "idea-gemma3-swift-ui",
+      "title": "Native macOS SwiftUI app for Gemma 3",
+      "status": "idea",
+      "created": "2026-05-18",
+      "tags": [
+        "macos",
+        "swift",
+        "ui",
+        "gemma3"
+      ],
+      "description": "A native macOS SwiftUI wrapper around the gemma3 CLI for a polished app-store-style experience."
+    },
+    {
+      "id": "idea-brain-web-dashboard",
+      "title": "Web dashboard for the Jarvis brain",
+      "status": "idea",
+      "created": "2026-05-18",
+      "tags": [
+        "web",
+        "brain",
+        "dashboard",
+        "visualization"
+      ],
+      "description": "A GitHub Pages site that renders brain/index.json as a visual knowledge map \u2014 timeline, tag cloud, repo graph."
+    }
+  ]
+}

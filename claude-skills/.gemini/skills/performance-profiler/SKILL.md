@@ -1,1 +1,1 @@
-../../../engineering/skills/performance-profiler/SKILL.md
+../../../engineering/performance-profiler/SKILL.md

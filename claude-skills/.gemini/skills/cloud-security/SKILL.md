@@ -1,1 +1,1 @@
-../../../engineering-team/skills/cloud-security/SKILL.md
+../../../engineering-team/cloud-security/SKILL.md

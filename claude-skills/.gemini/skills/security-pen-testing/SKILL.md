@@ -1,1 +1,1 @@
-../../../engineering-team/skills/security-pen-testing/SKILL.md
+../../../engineering-team/security-pen-testing/SKILL.md

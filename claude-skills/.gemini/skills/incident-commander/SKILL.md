@@ -1,1 +1,1 @@
-../../../engineering-team/skills/incident-commander/SKILL.md
+../../../engineering-team/incident-commander/SKILL.md

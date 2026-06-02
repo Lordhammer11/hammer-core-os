@@ -1,6 +1,6 @@
 ---
 title: "Email Template Builder — Agent Skill & Codex Plugin"
-description: "Build complete transactional email systems: React Email templates, provider integration (Resend, Postmark, SendGrid, AWS SES), preview server, i18n. Agent skill for Claude Code, Codex CLI, Gemini CLI, OpenClaw."
+description: "Email Template Builder. Agent skill for Claude Code, Codex CLI, Gemini CLI, OpenClaw."
 ---
 
 # Email Template Builder
@@ -8,7 +8,7 @@ description: "Build complete transactional email systems: React Email templates,
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-code-braces: Engineering - Core</span>
 <span class="meta-badge">:material-identifier: `email-template-builder`</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/engineering-team/skills/email-template-builder/SKILL.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/engineering-team/email-template-builder/SKILL.md">Source</a></span>
 </div>
 
 <div class="install-banner" markdown>

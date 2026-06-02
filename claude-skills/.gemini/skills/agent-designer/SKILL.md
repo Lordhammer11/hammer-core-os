@@ -1,1 +1,1 @@
-../../../engineering/skills/agent-designer/SKILL.md
+../../../engineering/agent-designer/SKILL.md

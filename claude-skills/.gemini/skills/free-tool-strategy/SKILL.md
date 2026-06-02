@@ -1,1 +1,1 @@
-../../../marketing-skill/skills/free-tool-strategy/SKILL.md
+../../../marketing-skill/free-tool-strategy/SKILL.md

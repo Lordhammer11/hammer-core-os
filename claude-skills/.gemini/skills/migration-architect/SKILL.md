@@ -1,1 +1,1 @@
-../../../engineering/skills/migration-architect/SKILL.md
+../../../engineering/migration-architect/SKILL.md

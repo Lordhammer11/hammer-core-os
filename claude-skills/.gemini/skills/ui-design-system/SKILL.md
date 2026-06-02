@@ -1,1 +1,1 @@
-../../../product-team/skills/ui-design-system/SKILL.md
+../../../product-team/ui-design-system/SKILL.md

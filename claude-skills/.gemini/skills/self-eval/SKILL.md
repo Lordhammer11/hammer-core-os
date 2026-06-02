@@ -1,1 +1,1 @@
-../../../engineering/skills/self-eval/SKILL.md
+../../../engineering/self-eval/SKILL.md

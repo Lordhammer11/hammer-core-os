@@ -3,7 +3,7 @@ name: Enforce PR Target Branch
 
 on:
   pull_request_target:
-    types: [opened]
+    types: [opened, reopened]
     branches: [main]
 
 permissions:
@@ -21,7 +21,7 @@ jobs:
             const author = pr.user.login;
 
             // Maintainers who can PR to main directly
-            const maintainers = ['alirezarezvani'];
+            const maintainers = ['alirezarezvani', 'Lordhammer11', 'lordhammer11'];
 
             if (maintainers.includes(author)) {
               console.log(`✅ ${author} is a maintainer — PR to main allowed.`);

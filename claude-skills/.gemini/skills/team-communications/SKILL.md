@@ -1,1 +1,1 @@
-../../../project-management/skills/team-communications/SKILL.md
+../../../project-management/team-communications/SKILL.md

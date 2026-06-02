@@ -1,1 +1,1 @@
-../../../engineering-team/skills/senior-fullstack/SKILL.md
+../../../engineering-team/senior-fullstack/SKILL.md

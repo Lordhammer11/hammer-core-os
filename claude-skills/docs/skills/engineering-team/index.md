@@ -17,6 +17,12 @@ description: "51 engineering - core skills — engineering agent skill and Claud
 
 <div class="grid cards" markdown>
 
+-   **[Accessibility Audit](a11y-audit.md)**
+
+    ---
+
+    WCAG 2.2 Accessibility Audit and Remediation Skill
+
 -   **[Adversarial Code Reviewer](adversarial-reviewer.md)**
 
     ---
@@ -59,7 +65,7 @@ description: "51 engineering - core skills — engineering agent skill and Claud
 
     Tier: POWERFUL
 
--   **[Engineering Team Skills](engineering-skills.md)**
+-   **[Engineering Team Skills](engineering-team.md)**
 
     ---
 
@@ -76,6 +82,12 @@ description: "51 engineering - core skills — engineering agent skill and Claud
     ---
 
     Design scalable, cost-effective Google Cloud architectures for startups and enterprises with infrastructure-as-code t...
+
+-   **[Google Workspace CLI](google-workspace-cli.md)**
+
+    ---
+
+    Expert guidance and automation for Google Workspace administration using the open-source gws CLI. Covers installation...
 
 -   **[Incident Commander Skill](incident-commander.md)**
 
@@ -95,6 +107,12 @@ description: "51 engineering - core skills — engineering agent skill and Claud
 
     Expert guidance and automation for Microsoft 365 Global Administrators managing tenant setup, user lifecycle, securit...
 
+-   **[Playwright Pro](playwright-pro.md)** + 9 sub-skills
+
+    ---
+
+    Production-grade Playwright testing toolkit for AI coding agents.
+
 -   **[Red Team](red-team.md)**
 
     ---
@@ -106,6 +124,12 @@ description: "51 engineering - core skills — engineering agent skill and Claud
     ---
 
     Hands-on offensive security testing skill for finding vulnerabilities before attackers do. This is NOT compliance che...
+
+-   **[Self-Improving Agent](self-improving-agent.md)** + 5 sub-skills
+
+    ---
+
+    > Auto-memory captures. This plugin curates.
 
 -   **[Senior Architect](senior-architect.md)**
 
@@ -184,6 +208,12 @@ description: "51 engineering - core skills — engineering agent skill and Claud
     ---
 
     Security engineering tools for threat modeling, vulnerability analysis, secure architecture design, and penetration t...
+
+-   **[Snowflake Development](snowflake-development.md)**
+
+    ---
+
+    Snowflake SQL, data pipelines, Cortex AI, and Snowpark Python development. Covers the colon-prefix rule, semi-structu...
 
 -   **[Stripe Integration Expert](stripe-integration-expert.md)**
 

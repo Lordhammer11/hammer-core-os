@@ -1,1 +1,1 @@
-../../../engineering/behuman/skills/behuman/SKILL.md
+../../../engineering/behuman/SKILL.md
